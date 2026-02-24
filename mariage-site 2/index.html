@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Margaux & Léopold - 29 Août 2026</title>
+<style>
+@font-face {
+  font-family: 'OpeningHours';
+  src: url('fonts/OpeningHoursSans-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'HedvigLetters';
+  src: url('fonts/HedvigLettersSerif12pt-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --cream: #f5ede0;
+  --cream-light: #faf7f1;
+  --cream-bright: #fdfbf7;
+  --burgundy: #67102a;
+  --burgundy-light: #8a2040;
+  --burgundy-dark: #4e0c20;
+  --gold: #b8956a;
+  --gold-light: #d4b98a;
+  --charcoal: #2C2C2C;
+  --warm-gray: #7A7168;
+  --blush: #e8d5c4;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+body {
+  font-family: 'OpeningHours', 'Josefin Sans', sans-serif;
+  font-weight: 400;
+  color: var(--charcoal);
+  background: var(--cream-bright);
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+  padding: 20px 40px;
+  display: flex; justify-content: center; gap: 30px;
+  transition: all 0.5s ease;
+  background: transparent;
+}
+nav.scrolled {
+  background: rgba(253, 251, 247, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 20px rgba(0,0,0,0.04);
+  padding: 14px 40px;
+}
+nav a {
+  font-family: 'OpeningHours', sans-serif;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--charcoal); text-decoration: none;
+  position: relative; padding: 4px 0; transition: color 0.3s;
+}
+nav a::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 1px; background: var(--burgundy); transition: width 0.3s ease;
+}
+nav a:hover::after { width: 100%; }
+nav a:hover { color: var(--burgundy); }
+
+.hero {
+  height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, var(--cream-bright) 0%, var(--cream-bright) 70%, var(--cream-light) 100%);
+}
+.hero-content { text-align: center; z-index: 1; position: relative; }
+.hero-names {
+  font-family: 'HedvigLetters', serif;
+  font-size: clamp(50px, 10vw, 130px); line-height: 1;
+  color: var(--charcoal); display: block;
+  opacity: 0; animation: fadeUp 1.2s ease 0.3s forwards;
+}
+.hero-et {
+  font-family: 'HedvigLetters', serif; font-style: italic;
+  font-size: clamp(22px, 3.5vw, 40px); color: var(--burgundy);
+  display: flex; align-items: center; justify-content: center; gap: 20px;
+  margin: 15px 0;
+  opacity: 0; animation: fadeUp 1.2s ease 0.5s forwards;
+}
+.hero-et::before, .hero-et::after {
+  content: ''; width: 60px; height: 1px; background: var(--burgundy); opacity: 0.3;
+}
+
+.seamless-wrap {
+  background: linear-gradient(180deg,
+    var(--cream-light) 0%, var(--cream-bright) 8%, var(--cream-bright) 15%,
+    var(--cream-light) 30%, var(--cream-bright) 50%, var(--cream-light) 70%,
+    var(--cream-bright) 85%, var(--cream-light) 100%);
+}
+
+.section-label {
+  font-family: 'OpeningHours', sans-serif;
+  font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--burgundy); margin-bottom: 20px;
+}
+.section-title {
+  font-family: 'HedvigLetters', serif;
+  font-size: clamp(36px, 5vw, 64px); color: var(--charcoal);
+  margin-bottom: 40px; line-height: 1.2;
+}
+.section-divider {
+  width: 60px; height: 1px; background: var(--burgundy); margin: 0 auto 60px;
+}
+
+.countdown-section { text-align: center; padding: 80px 40px; }
+.countdown { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; }
+.countdown-item { text-align: center; }
+.countdown-number {
+  font-family: 'HedvigLetters', serif;
+  font-size: 60px; color: var(--burgundy); line-height: 1;
+}
+.countdown-label {
+  font-family: 'OpeningHours', sans-serif;
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--warm-gray); margin-top: 8px;
+}
+
+.chateau-section {
+  max-width: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: 1fr 1fr; min-height: 550px;
+}
+.chateau-image {
+  background: #0a0000;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 400px; overflow: hidden;
+}
+.chateau-image img { width: 100%; height: 100%; object-fit: contain; padding: 40px; }
+.chateau-content {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px; background: var(--cream-bright);
+}
+.chateau-title {
+  font-family: 'HedvigLetters', serif;
+  font-size: 14px; letter-spacing: 6px; text-transform: uppercase;
+  color: var(--burgundy); margin-bottom: 6px;
+}
+.chateau-name {
+  font-family: 'HedvigLetters', serif;
+  font-size: clamp(28px, 3vw, 42px); color: var(--charcoal);
+  margin-bottom: 30px; line-height: 1.3;
+}
+.chateau-desc {
+  font-family: 'HedvigLetters', serif;
+  font-size: 17px; line-height: 1.9; color: var(--warm-gray); max-width: 480px;
+}
+
+.programme-section { text-align: center; padding: 120px 40px; max-width: 1200px; margin: 0 auto; }
+.timeline { position: relative; max-width: 600px; margin: 0 auto; padding: 20px 0; }
+.timeline::before {
+  content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(103,16,42,0.2), rgba(103,16,42,0.2), transparent);
+  transform: translateX(-50%);
+}
+.timeline-item {
+  display: flex; align-items: center; margin-bottom: 50px;
+  opacity: 0; transform: translateY(30px); transition: all 0.6s ease;
+}
+.timeline-item.visible { opacity: 1; transform: translateY(0); }
+.timeline-item:nth-child(odd) { flex-direction: row; text-align: right; }
+.timeline-item:nth-child(even) { flex-direction: row-reverse; text-align: left; }
+.timeline-content { flex: 1; padding: 0 40px; }
+.timeline-time { font-family: 'HedvigLetters', serif; font-size: 28px; color: var(--burgundy); }
+.timeline-event {
+  font-family: 'OpeningHours', sans-serif;
+  font-size: 14px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--charcoal); margin-top: 4px;
+}
+.timeline-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--cream-bright); border: 2px solid var(--burgundy);
+  flex-shrink: 0; z-index: 1; transition: all 0.3s ease;
+}
+.timeline-item:hover .timeline-dot { background: var(--burgundy); transform: scale(1.3); }
+
+.lieux-section { text-align: center; max-width: none; margin: 0; padding: 120px 40px; }
+.lieux-title-wrap { max-width: 800px; margin: 0 auto; }
+.lieux-stack { max-width: 750px; margin: 0 auto; }
+.lieu-row {
+  display: grid; grid-template-columns: 180px 1fr; gap: 50px;
+  align-items: center; padding: 50px 0;
+  border-top: 1px solid rgba(103,16,42,0.1);
+  opacity: 0; transform: translateY(30px); transition: all 0.6s ease;
+}
+.lieu-row.visible { opacity: 1; transform: translateY(0); }
+.lieu-row:first-child { border-top: none; }
+.lieu-illustration {
+  width: 180px; height: 200px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto; background: #0a0000; border-radius: 4px; overflow: hidden;
+}
+.lieu-illustration img { width: 100%; height: 100%; object-fit: contain; padding: 15px; }
+.lieu-row-info { text-align: left; }
+.lieu-row-name {
+  font-family: 'OpeningHours', sans-serif;
+  font-size: 13px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--charcoal); margin-bottom: 12px;
+}
+.lieu-row-address {
+  font-family: 'HedvigLetters', serif;
+  font-size: 16px; color: var(--warm-gray); line-height: 1.7; margin-bottom: 20px;
+}
+.lieu-row-link {
+  font-family: 'HedvigLetters', serif; font-style: italic;
+  font-size: 16px; color: var(--burgundy); text-decoration: none; position: relative;
+}
+.lieu-row-link::after {
+  content: ''; position: absolute; bottom: -2px; left: 0;
+  width: 100%; height: 1px; background: var(--burgundy); opacity: 0.3; transition: opacity 0.3s;
+}
+.lieu-row-link:hover::after { opacity: 1; }
+
+.infos-section {
+  text-align: center; background: var(--burgundy); color: var(--cream);
+  max-width: none; padding: 120px 40px; margin: 0;
+}
+.infos-section .section-label { color: var(--gold-light); }
+.infos-section .section-title { color: var(--cream); }
+.infos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; max-width: 900px; margin: 0 auto; }
+.info-block {
+  padding: 60px 50px;
+  border: 1px solid rgba(245,237,224,0.1);
+  transition: all 0.4s ease;
+  opacity: 0; transform: translateY(30px);
+}
+.info-block.visible { opacity: 1; transform: translateY(0); }
+.info-block:first-child { border-right: 1px solid rgba(245,237,224,0.1); }
+.info-block:hover { background: rgba(245,237,224,0.05); }
+.info-illustration {
+  width: 120px; height: 120px; margin: 0 auto 28px;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.info-illustration img { width: 100%; height: 100%; object-fit: contain; }
+.info-title {
+  font-family: 'OpeningHours', sans-serif;
+  font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--cream); margin-bottom: 16px;
+}
+.info-desc {
+  font-family: 'HedvigLetters', serif;
+  font-size: 16px; color: rgba(245,237,224,0.6); line-height: 1.8; margin-bottom: 28px;
+}
+.info-link {
+  font-family: 'HedvigLetters', serif; font-style: italic;
+  font-size: 16px; color: var(--gold-light); text-decoration: none; position: relative;
+}
+.info-link::after {
+  content: ''; position: absolute; bottom: -2px; left: 0;
+  width: 100%; height: 1px; background: var(--gold-light); opacity: 0.3; transition: opacity 0.3s;
+}
+.info-link:hover::after { opacity: 1; }
+
+.hebergement-section {
+  max-width: none; margin: 0; padding: 120px 40px;
+  background: var(--cream-bright); text-align: center;
+}
+.hebergement-section .section-title { font-size: clamp(32px, 4vw, 56px); }
+.hebergement-category { max-width: 1000px; margin: 0 auto 60px; }
+.hebergement-category:last-child { margin-bottom: 0; }
+.hebergement-category-title {
+  font-family: 'OpeningHours', sans-serif;
+  font-size: 11px; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--burgundy); margin-bottom: 30px; padding-bottom: 14px;
+  border-bottom: 1px solid rgba(103,16,42,0.15);
+}
+.hebergement-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.hebergement-card {
+  padding: 30px 24px;
+  border: 1px solid rgba(103,16,42,0.08); border-radius: 4px;
+  text-align: left; background: var(--cream-light);
+  opacity: 0; transform: translateY(20px); transition: all 0.5s ease;
+  text-decoration: none; color: inherit; display: block;
+}
+.hebergement-card.visible { opacity: 1; transform: translateY(0); }
+.hebergement-card:hover {
+  border-color: rgba(103,16,42,0.2);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  transform: translateY(-2px);
+}
+.hebergement-card-name {
+  font-family: 'HedvigLetters', serif;
+  font-size: 20px; color: var(--charcoal); margin-bottom: 10px; line-height: 1.3;
+}
+.hebergement-card-details {
+  font-family: 'OpeningHours', sans-serif;
+  font-size: 11px; letter-spacing: 1px; color: var(--warm-gray); line-height: 1.8;
+}
+.hebergement-card-details span { display: block; }
+.hebergement-card-distance {
+  font-family: 'HedvigLetters', serif; font-style: italic;
+  font-size: 14px; color: var(--burgundy); margin-top: 10px;
+}
+
+.rsvp-section {
+  text-align: center; padding: 140px 40px; position: relative; max-width: none; margin: 0;
+}
+.rsvp-content { position: relative; z-index: 1; }
+.rsvp-section .section-title { font-size: clamp(36px, 5vw, 56px); margin-bottom: 20px; }
+.rsvp-text {
+  font-family: 'HedvigLetters', serif; font-style: italic;
+  font-size: 20px; color: var(--warm-gray);
+  max-width: 500px; margin: 0 auto 40px; line-height: 1.6;
+}
+
+footer {
+  text-align: center; padding: 60px 40px;
+  border-top: 1px solid rgba(103,16,42,0.06);
+}
+.footer-names {
+  font-family: 'HedvigLetters', serif;
+  font-size: 28px; color: var(--charcoal); margin-bottom: 12px;
+}
+.footer-date {
+  font-family: 'OpeningHours', sans-serif;
+  font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--warm-gray);
+}
+.footer-heart {
+  color: var(--burgundy); font-size: 16px; margin-top: 20px;
+  display: block; animation: pulse 2s ease infinite;
+}
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.25,0.46,0.45,0.94); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+  nav { gap: 15px; padding: 15px 20px; flex-wrap: wrap; }
+  nav a { font-size: 9px; letter-spacing: 2px; }
+  .hero-names { font-size: clamp(40px, 12vw, 80px); }
+  .countdown { gap: 30px; }
+  .countdown-number { font-size: 40px; }
+  .chateau-section { grid-template-columns: 1fr; }
+  .chateau-image { min-height: 280px; }
+  .chateau-content { padding: 50px 30px; }
+  .programme-section { padding: 80px 24px; }
+  .timeline-item { flex-direction: column !important; text-align: center !important; margin-bottom: 40px; }
+  .timeline-content { padding: 15px 0; }
+  .timeline::before { display: none; }
+  .lieu-row { grid-template-columns: 1fr; text-align: center; gap: 20px; }
+  .lieu-row-info { text-align: center; }
+  .lieu-illustration { width: 140px; height: 160px; }
+  .infos-grid { grid-template-columns: 1fr; }
+  .info-block:first-child { border-right: none; border-bottom: 1px solid rgba(245,237,224,0.1); }
+  .lieux-section, .infos-section, .hebergement-section { padding: 80px 24px; }
+  .hebergement-grid { grid-template-columns: 1fr; }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hebergement-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#programme">Programme</a>
+  <a href="#lieux">Lieux</a>
+  <a href="#playlist">Playlist & Cadeaux</a>
+  <a href="#hebergement">Hébergement</a>
+  <a href="#rsvp">RSVP</a>
+</nav>
+
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <h1>
+      <span class="hero-names">Margaux</span>
+      <span class="hero-et">et</span>
+      <span class="hero-names" style="animation-delay: 0.7s;">Léopold</span>
+    </h1>
+  </div>
+</section>
+
+<div class="seamless-wrap">
+
+<div class="countdown-section">
+  <div class="countdown reveal">
+    <div class="countdown-item"><div class="countdown-number" id="days">--</div><div class="countdown-label">Jours</div></div>
+    <div class="countdown-item"><div class="countdown-number" id="hours">--</div><div class="countdown-label">Heures</div></div>
+    <div class="countdown-item"><div class="countdown-number" id="minutes">--</div><div class="countdown-label">Minutes</div></div>
+    <div class="countdown-item"><div class="countdown-number" id="seconds">--</div><div class="countdown-label">Secondes</div></div>
+  </div>
+</div>
+
+<div class="chateau-section">
+  <div class="chateau-image"><img src="images/chateau.png" alt="Château de Saint Trys"></div>
+  <div class="chateau-content">
+    <p class="chateau-title">Château de</p>
+    <h2 class="chateau-name">Saint Trys</h2>
+    <p class="chateau-desc">Situé aux portes du Beaujolais, le Château de Saint Trys est le théâtre depuis 20 ans des plus grandes réceptions lyonnaises.</p>
+    <br>
+    <p class="chateau-desc">Le Cuvage de 580m2 permet d'accueillir jusqu'à 600 personnes pour des évènements privés ou professionnels. Idéalement situé au coeur de la propriété, le cadre plus intimiste de l'Orangerie s'accompagne d'un cloître d'inspiration italienne donnant sur la terrasse du château, offrant ainsi une vue imprenable sur la vallée de la Saône.</p>
+  </div>
+</div>
+
+<div class="programme-section" id="programme">
+  <p class="section-label reveal" style="text-align:center;">Le déroulé</p>
+  <h2 class="section-title reveal" style="text-align:center;">Programme de la journée</h2>
+  <div class="section-divider reveal"></div>
+  <div class="timeline">
+    <div class="timeline-item"><div class="timeline-content"><div class="timeline-time">14h30</div><div class="timeline-event">Cérémonie religieuse</div></div><div class="timeline-dot"></div><div class="timeline-content"></div></div>
+    <div class="timeline-item"><div class="timeline-content"><div class="timeline-time">16h30</div><div class="timeline-event">Vin d'honneur & Cocktail</div></div><div class="timeline-dot"></div><div class="timeline-content"></div></div>
+    <div class="timeline-item"><div class="timeline-content"><div class="timeline-time">20h00</div><div class="timeline-event">Dîner</div></div><div class="timeline-dot"></div><div class="timeline-content"></div></div>
+    <div class="timeline-item"><div class="timeline-content"><div class="timeline-time">23h00</div><div class="timeline-event">Soirée dansante</div></div><div class="timeline-dot"></div><div class="timeline-content"></div></div>
+    <div class="timeline-item"><div class="timeline-content"><div class="timeline-time">11h00</div><div class="timeline-event">Brunch du lendemain</div></div><div class="timeline-dot"></div><div class="timeline-content"></div></div>
+  </div>
+</div>
+
+<div class="lieux-section" id="lieux">
+  <div class="lieux-title-wrap">
+    <p class="section-label reveal" style="text-align:center;">Les adresses</p>
+    <h2 class="section-title reveal" style="text-align:center;">Lieux de célébration</h2>
+    <div class="section-divider reveal"></div>
+  </div>
+  <div class="lieux-stack">
+    <div class="lieu-row">
+      <div class="lieu-illustration"><img src="images/eglise.png" alt="Église"></div>
+      <div class="lieu-row-info">
+        <h3 class="lieu-row-name">La Cérémonie</h3>
+        <p class="lieu-row-address">Cérémonie religieuse<br>Adresse à personnaliser</p>
+        <a href="https://maps.app.goo.gl/HzhwaEiEanE8XsVP9?g_st=ic" target="_blank" class="lieu-row-link">voir sur la carte</a>
+      </div>
+    </div>
+    <div class="lieu-row">
+      <div class="lieu-illustration"><img src="images/reception.png" alt="Réception"></div>
+      <div class="lieu-row-info">
+        <h3 class="lieu-row-name">La Réception</h3>
+        <p class="lieu-row-address">Château de Saint Trys<br>Cocktail, dîner & soirée</p>
+        <a href="https://maps.app.goo.gl/i2Td44qvC1W3iayK7?g_st=ic" target="_blank" class="lieu-row-link">voir sur la carte</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="infos-section" id="playlist">
+  <p class="section-label" style="text-align:center;">Pour vous</p>
+  <h2 class="section-title" style="text-align:center;">Playlist & Liste de mariage</h2>
+  <div class="section-divider" style="background: var(--gold-light);"></div>
+  <div class="infos-grid">
+    <div class="info-block">
+      <div class="info-illustration"><img src="images/playlist.png" alt="Playlist"></div>
+      <h3 class="info-title">Notre Playlist</h3>
+      <p class="info-desc">Ajoutez vos morceaux préférés pour une soirée inoubliable</p>
+      <a href="https://open.spotify.com/playlist/3E3y4jsG2j1bFgEettjk2l?si=LAWHGd5VSMS0Q___2UCFxA&pi=vUH4fBQvTd2Ad&pt=2ffe6201b545f2d128881194412b92c1" target="_blank" class="info-link">ouvrir spotify</a>
+    </div>
+    <div class="info-block">
+      <div class="info-illustration"><img src="images/cadeau.png" alt="Cadeau"></div>
+      <h3 class="info-title">Liste de mariage</h3>
+      <p class="info-desc">Votre présence est le plus beau des cadeaux</p>
+      <a href="https://www.millemercismariage.com/margauxetleopold/liste.html" target="_blank" class="info-link">voir la liste</a>
+    </div>
+  </div>
+</div>
+
+<div class="hebergement-section" id="hebergement">
+  <p class="section-label reveal" style="text-align:center;">Où dormir</p>
+  <h2 class="section-title reveal" style="text-align:center;">Hébergement</h2>
+  <div class="section-divider reveal"></div>
+
+  <div class="hebergement-category">
+    <h3 class="hebergement-category-title">Hôtels</h3>
+    <div class="hebergement-grid">
+      <a class="hebergement-card" href="https://www.lespierresdorees.com/" target="_blank"><h4 class="hebergement-card-name">Des Pierres Dorées</h4><div class="hebergement-card-details"><span>Ambérieux</span></div><p class="hebergement-card-distance">4 km de Saint Trys</p></a>
+      <a class="hebergement-card" href="https://www.hotel-saint-romain.fr/" target="_blank"><h4 class="hebergement-card-name">Le Saint Romain</h4><div class="hebergement-card-details"><span>Anse</span></div><p class="hebergement-card-distance">2 km de Saint Trys</p></a>
+      <a class="hebergement-card" href="https://www.chateaudebagnols.com/" target="_blank"><h4 class="hebergement-card-name">Château de Bagnols</h4><div class="hebergement-card-details"><span>Bagnols</span></div><p class="hebergement-card-distance">10 km de Saint Trys</p></a>
+      <a class="hebergement-card" href="https://all.accor.com/hotel/9783/index.fr.shtml" target="_blank"><h4 class="hebergement-card-name">Le Mercure</h4><div class="hebergement-card-details"><span>Villefranche</span></div><p class="hebergement-card-distance">7 km de Saint Trys</p></a>
+      <a class="hebergement-card" href="https://hotel-plaisance.com/" target="_blank"><h4 class="hebergement-card-name">Plaisance</h4><div class="hebergement-card-details"><span>Villefranche</span></div><p class="hebergement-card-distance">7 km de Saint Trys</p></a>
+    </div>
+  </div>
+
+  <div class="hebergement-category">
+    <h3 class="hebergement-category-title">Chambres d'hôtes</h3>
+    <div class="hebergement-grid">
+      <a class="hebergement-card" href="https://www.google.com/search?q=Chez+Astrid+de+l%27Escaille+Pommiers" target="_blank"><h4 class="hebergement-card-name">Chez Astrid de l'Escaille</h4><div class="hebergement-card-details"><span>Pommiers</span></div><p class="hebergement-card-distance">2 km de Saint Trys</p></a>
+      <a class="hebergement-card" href="https://www.domainedemontclair.fr/" target="_blank"><h4 class="hebergement-card-name">Domaine de Montclair</h4><div class="hebergement-card-details"><span>Pommiers</span></div><p class="hebergement-card-distance">2 km de Saint Trys</p></a>
+      <a class="hebergement-card" href="https://www.google.com/search?q=Le+D%C3%A9o+Pommiers+chambre+hotes" target="_blank"><h4 class="hebergement-card-name">Le Déo</h4><div class="hebergement-card-details"><span>Pommiers</span></div><p class="hebergement-card-distance">2 km de Saint Trys</p></a>
+    </div>
+  </div>
+
+  <div class="hebergement-category">
+    <h3 class="hebergement-category-title">Gîtes</h3>
+    <div class="hebergement-grid">
+      <a class="hebergement-card" href="https://www.google.com/search?q=Chez+Astrid+de+l%27Escaille+Pommiers+gite" target="_blank"><h4 class="hebergement-card-name">Chez Astrid de l'Escaille</h4><div class="hebergement-card-details"><span>Pommiers</span></div><p class="hebergement-card-distance">2 km de Saint Trys</p></a>
+      <a class="hebergement-card" href="https://www.domainedemontclair.fr/" target="_blank"><h4 class="hebergement-card-name">Domaine de Montclair</h4><div class="hebergement-card-details"><span>Pommiers</span></div><p class="hebergement-card-distance">2 km de Saint Trys</p></a>
+      <a class="hebergement-card" href="https://lagrangesurlacolline.fr/" target="_blank"><h4 class="hebergement-card-name">La Grange sur la Colline</h4><div class="hebergement-card-details"><span>Marcy</span></div><p class="hebergement-card-distance">5 km de Saint Trys</p></a>
+      <a class="hebergement-card" href="https://www.google.com/search?q=Le+Clos+du+Puits+Bel+Air+Pommiers" target="_blank"><h4 class="hebergement-card-name">Le Clos du Puits Bel Air</h4><div class="hebergement-card-details"><span>Pommiers</span></div><p class="hebergement-card-distance">2 km de Saint Trys</p></a>
+      <a class="hebergement-card" href="https://www.google.com/search?q=Gite+du+Beaujolais+Pommiers" target="_blank"><h4 class="hebergement-card-name">Gîte du Beaujolais</h4><div class="hebergement-card-details"><span>Pommiers</span></div><p class="hebergement-card-distance">4 km de Saint Trys</p></a>
+      <a class="hebergement-card" href="https://www.google.com/search?q=Domaine+Berger+des+Vignes+Pommiers" target="_blank"><h4 class="hebergement-card-name">Domaine Berger des Vignes</h4><div class="hebergement-card-details"><span>Pommiers</span></div><p class="hebergement-card-distance">4 km de Saint Trys</p></a>
+    </div>
+  </div>
+</div>
+
+<div class="rsvp-section" id="rsvp">
+  <div class="rsvp-content">
+    <p class="section-label reveal" style="text-align:center;">Répondez-nous</p>
+    <h2 class="section-title reveal" style="text-align:center;">Confirmez votre présence</h2>
+    <p class="rsvp-text reveal">Merci de répondre au questionnaire reçu avec votre faire-part en scannant le QR code au dos de votre carton d'invitation.</p>
+  </div>
+</div>
+
+<footer>
+  <p class="footer-names">M & L</p>
+  <p class="footer-date">29 Août 2026</p>
+  <span class="footer-heart">&#9829;</span>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 80); });
+const weddingDate = new Date('2026-08-29T16:00:00');
+function updateCountdown() {
+  const now = new Date(), diff = weddingDate - now;
+  if (diff <= 0) { ['days','hours','minutes','seconds'].forEach(id => document.getElementById(id).textContent = '0'); return; }
+  document.getElementById('days').textContent = Math.floor(diff / 864e5);
+  document.getElementById('hours').textContent = Math.floor((diff % 864e5) / 36e5);
+  document.getElementById('minutes').textContent = Math.floor((diff % 36e5) / 6e4);
+  document.getElementById('seconds').textContent = Math.floor((diff % 6e4) / 1e3);
+}
+updateCountdown(); setInterval(updateCountdown, 1000);
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal, .timeline-item, .lieu-row, .info-block, .hebergement-card').forEach(el => observer.observe(el));
+document.querySelectorAll('nav a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
