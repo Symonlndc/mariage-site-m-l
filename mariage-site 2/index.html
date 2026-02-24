@@ -106,33 +106,32 @@ nav a:hover { color: var(--burgundy); }
   position: relative; overflow: hidden;
 }
 .hero-content { text-align: center; z-index: 1; position: relative; width: 100%; }
+.hero-line {
+  overflow: hidden; display: block;
+  padding-bottom: 0.08em; /* room for descenders */
+}
 .hero-names {
   font-family: 'RecifeDisplay', serif;
-  font-size: 12.8vw; line-height: 1.05;
+  font-size: 12.8vw; line-height: 1.15;
   font-weight: 400; letter-spacing: -0.02em;
   color: var(--burgundy); display: block;
   white-space: nowrap;
-  clip-path: inset(0 100% 0 0);
+  transform: translateY(105%);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.hero-names--margaux {
-  margin-left: -20%;
-  animation: handwrite 2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.5s forwards;
-}
-.hero-names--leopold {
-  margin-left: 20%;
-  animation: handwrite 2s cubic-bezier(0.22, 0.61, 0.36, 1) 2s forwards;
-}
-@keyframes handwrite {
-  0% { clip-path: inset(0 100% 0 0); }
-  100% { clip-path: inset(0 0% 0 0); }
-}
+.hero-names.visible { transform: translateY(0); }
+.hero-names--margaux { margin-left: -20%; }
+.hero-names--leopold { margin-left: 20%; }
+.hero-et-wrap { overflow: hidden; display: flex; justify-content: center; }
 .hero-et {
   font-family: 'RecifeDisplay', serif; font-style: italic;
   font-size: clamp(22px, 3.5vw, 40px); font-weight: 400; color: var(--burgundy);
   display: flex; align-items: center; justify-content: center; gap: 20px;
   margin: 15px 0;
-  opacity: 0; animation: fadeUp 0.6s ease 1.8s forwards;
+  transform: translateY(105%); opacity: 0;
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
 }
+.hero-et.visible { transform: translateY(0); opacity: 1; }
 .hero-et::before, .hero-et::after {
   content: ''; width: 60px; height: 1px; background: var(--burgundy); opacity: 0.3;
 }
@@ -467,9 +466,9 @@ footer {
 <section class="hero" id="hero">
   <div class="hero-content">
     <h1>
-      <span class="hero-names hero-names--margaux">Margaux</span>
-      <span class="hero-et">et</span>
-      <span class="hero-names hero-names--leopold">Léopold</span>
+      <span class="hero-line"><span class="hero-names hero-names--margaux">Margaux</span></span>
+      <span class="hero-et-wrap"><span class="hero-et">et</span></span>
+      <span class="hero-line"><span class="hero-names hero-names--leopold">Léopold</span></span>
     </h1>
   </div>
 </section>
@@ -607,6 +606,16 @@ footer {
 </footer>
 
 <script>
+// Hero line-reveal animation with stagger
+(function() {
+  const names = document.querySelectorAll('.hero-names');
+  const et = document.querySelector('.hero-et');
+  const delays = [400, 900, 1300]; // stagger: Margaux, et, Léopold
+  setTimeout(() => { names[0] && names[0].classList.add('visible'); }, delays[0]);
+  setTimeout(() => { et && et.classList.add('visible'); }, delays[1]);
+  setTimeout(() => { names[1] && names[1].classList.add('visible'); }, delays[2]);
+})();
+
 const nav = document.getElementById('nav');
 let lastScrollY = 0;
 window.addEventListener('scroll', () => {
