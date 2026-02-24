@@ -63,51 +63,55 @@ body {
 }
 .gradient-bg__blob--1 {
   width: 70vw; height: 70vw; max-width: 900px; max-height: 900px;
-  background: radial-gradient(circle, rgba(103,16,42,0.18) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(103,16,42,0.22) 0%, transparent 70%);
   top: -20%; right: -15%;
-  animation: gBlob1 18s ease-in-out infinite;
+  animation: gBlob1 24s ease-in-out infinite;
 }
 .gradient-bg__blob--2 {
   width: 60vw; height: 60vw; max-width: 800px; max-height: 800px;
-  background: radial-gradient(circle, rgba(184,149,106,0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(184,149,106,0.2) 0%, transparent 70%);
   top: 30%; left: -20%;
-  animation: gBlob2 22s ease-in-out infinite;
+  animation: gBlob2 28s ease-in-out infinite;
 }
 .gradient-bg__blob--3 {
   width: 80vw; height: 80vw; max-width: 1000px; max-height: 1000px;
-  background: radial-gradient(circle, rgba(103,16,42,0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(103,16,42,0.16) 0%, transparent 70%);
   bottom: -10%; right: -10%;
-  animation: gBlob3 20s ease-in-out infinite;
+  animation: gBlob3 26s ease-in-out infinite;
 }
 .gradient-bg__blob--4 {
   width: 50vw; height: 50vw; max-width: 700px; max-height: 700px;
-  background: radial-gradient(circle, rgba(232,213,196,0.25) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(232,213,196,0.3) 0%, transparent 70%);
   top: 60%; left: 40%;
-  animation: gBlob4 16s ease-in-out infinite;
+  animation: gBlob4 20s ease-in-out infinite;
 }
 @keyframes gBlob1 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(-100px, 80px) scale(1.1); }
-  50% { transform: translate(-50px, 150px) scale(0.95); }
-  75% { transform: translate(60px, 50px) scale(1.05); }
+  20% { transform: translate(-200px, 120px) scale(1.15); }
+  40% { transform: translate(100px, 250px) scale(0.9); }
+  60% { transform: translate(-150px, 180px) scale(1.1); }
+  80% { transform: translate(80px, 60px) scale(0.95); }
 }
 @keyframes gBlob2 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(120px, -60px) scale(1.08); }
-  50% { transform: translate(80px, 100px) scale(1.12); }
-  75% { transform: translate(-40px, 60px) scale(0.92); }
+  20% { transform: translate(200px, -100px) scale(1.12); }
+  40% { transform: translate(150px, 180px) scale(0.88); }
+  60% { transform: translate(-80px, 120px) scale(1.18); }
+  80% { transform: translate(100px, -60px) scale(0.92); }
 }
 @keyframes gBlob3 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(-80px, -100px) scale(1.15); }
-  50% { transform: translate(60px, -60px) scale(0.9); }
-  75% { transform: translate(100px, 40px) scale(1.05); }
+  20% { transform: translate(-150px, -180px) scale(1.2); }
+  40% { transform: translate(120px, -100px) scale(0.85); }
+  60% { transform: translate(200px, 80px) scale(1.1); }
+  80% { transform: translate(-100px, 150px) scale(0.95); }
 }
 @keyframes gBlob4 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(-60px, 80px) scale(1.1); }
-  50% { transform: translate(100px, -40px) scale(0.95); }
-  75% { transform: translate(-30px, -70px) scale(1.08); }
+  20% { transform: translate(-120px, 150px) scale(1.15); }
+  40% { transform: translate(180px, -80px) scale(0.9); }
+  60% { transform: translate(-60px, -130px) scale(1.12); }
+  80% { transform: translate(140px, 100px) scale(0.88); }
 }
 body > *:not(.gradient-bg) { position: relative; z-index: 1; }
 
