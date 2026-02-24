@@ -26,6 +26,13 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'RecifeDisplay';
+  src: url('fonts/RecifeDisplay-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --cream: #f5ede0;
@@ -100,7 +107,7 @@ nav a:hover { color: var(--burgundy); }
 .hero-content { text-align: center; z-index: 1; position: relative; width: 100%; }
 .hero-names {
   font-family: 'FlorentineScript', serif;
-  font-size: clamp(68px, 15vw, 230px); line-height: 1.05;
+  font-size: 12.8vw; line-height: 1.05;
   font-weight: 400; letter-spacing: -0.02em;
   color: var(--burgundy); display: block;
   white-space: nowrap;
@@ -130,9 +137,9 @@ nav a:hover { color: var(--burgundy); }
 }
 
 .section-title {
-  font-family: 'FlorentineScript', serif;
-  font-size: clamp(36px, 5vw, 56px); font-weight: 400; color: var(--burgundy);
-  margin-bottom: 50px; line-height: 1.15; letter-spacing: -0.01em;
+  font-family: 'RecifeDisplay', serif;
+  font-size: 3rem; font-weight: 400; color: var(--burgundy);
+  margin-bottom: 50px; line-height: 1;
 }
 .section-divider {
   width: 60px; height: 1px; background: var(--burgundy); margin: 0 auto 70px;
@@ -165,9 +172,9 @@ nav a:hover { color: var(--burgundy); }
   padding: 100px;
 }
 .chateau-name {
-  font-family: 'FlorentineScript', serif;
-  font-size: clamp(36px, 5vw, 56px); font-weight: 400; color: var(--burgundy);
-  margin-bottom: 30px; line-height: 1.2;
+  font-family: 'RecifeDisplay', serif;
+  font-size: 3rem; font-weight: 400; color: var(--burgundy);
+  margin-bottom: 30px; line-height: 1;
 }
 .chateau-desc {
   font-family: 'OpeningHours', sans-serif;
@@ -327,7 +334,7 @@ nav a:hover { color: var(--burgundy); }
   max-width: none; margin: 0; padding: 150px 40px;
   text-align: center;
 }
-.hebergement-section .section-title { font-size: clamp(36px, 5vw, 56px); }
+.hebergement-section .section-title { font-size: 3rem; }
 .hebergement-category { max-width: 1000px; margin: 0 auto 70px; }
 .hebergement-category:last-child { margin-bottom: 0; }
 .hebergement-category-title {
@@ -369,7 +376,7 @@ nav a:hover { color: var(--burgundy); }
   text-align: center; padding: 160px 40px; position: relative; max-width: none; margin: 0;
 }
 .rsvp-content { position: relative; z-index: 1; }
-.rsvp-section .section-title { font-size: clamp(36px, 5vw, 56px); margin-bottom: 20px; }
+.rsvp-section .section-title { font-size: 3rem; margin-bottom: 20px; }
 .rsvp-text {
   font-family: 'OpeningHours', sans-serif; font-style: italic;
   font-size: 20px; color: var(--burgundy);
@@ -408,7 +415,7 @@ footer {
 @media (max-width: 768px) {
   nav { gap: 15px; padding: 15px 20px; flex-wrap: wrap; }
   nav a { font-size: 9px; letter-spacing: 2px; }
-  .hero-names { font-size: clamp(44px, 12vw, 90px); }
+  .hero-names { font-size: 12.8vw; }
   .hero-names--margaux { margin-left: -10%; }
   .hero-names--leopold { margin-left: 10%; }
   .countdown { gap: 30px; }
