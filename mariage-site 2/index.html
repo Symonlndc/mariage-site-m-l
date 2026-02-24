@@ -169,25 +169,23 @@ nav a:hover { color: var(--burgundy); }
 .programme-section { text-align: center; padding: 120px 40px 140px; max-width: 1200px; margin: 0 auto; }
 .timeline { position: relative; max-width: 600px; margin: 0 auto; padding: 40px 0; }
 .timeline::before {
-  content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px;
-  background: rgba(103,16,42,0.12);
+  content: ''; position: absolute; left: 50%; top: 0; width: 1px;
+  background: rgba(103,16,42,0.15);
   transform: translateX(-50%);
-  clip-path: inset(0 0 100% 0);
-  transition: clip-path 2s cubic-bezier(0.25,0.46,0.45,0.94);
-}
-.timeline.timeline-line-grow::before {
-  clip-path: inset(0 0 0% 0);
+  height: var(--line-h, 0px);
 }
 .timeline-item {
   display: flex; align-items: center; margin-bottom: 80px;
-  opacity: 0; transform: translateY(50px);
-  transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
 }
 .timeline-item:last-child { margin-bottom: 0; }
-.timeline-item.visible { opacity: 1; transform: translateY(0); }
 .timeline-item:nth-child(odd) { flex-direction: row; text-align: right; }
 .timeline-item:nth-child(even) { flex-direction: row-reverse; text-align: left; }
-.timeline-content { flex: 1; padding: 0 50px; }
+.timeline-content {
+  flex: 1; padding: 0 50px;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.timeline-item.active .timeline-content { opacity: 1; transform: translateY(0); }
 .timeline-time {
   font-family: 'FlorentineScript', serif; font-size: 42px; color: var(--burgundy);
   font-weight: 400; line-height: 1.1;
@@ -201,10 +199,11 @@ nav a:hover { color: var(--burgundy); }
   width: 10px; height: 10px; border-radius: 50%;
   background: var(--cream); border: 2px solid var(--burgundy);
   flex-shrink: 0; z-index: 1;
-  transition: background 0.4s ease, transform 0.4s ease;
+  opacity: 0; transform: scale(0);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
 }
-.timeline-item.visible .timeline-dot { background: var(--burgundy); transform: scale(1); }
-.timeline-item:hover .timeline-dot { transform: scale(1.4); }
+.timeline-item.active .timeline-dot { opacity: 1; transform: scale(1); background: var(--burgundy); }
+.timeline-item.active:hover .timeline-dot { transform: scale(1.4); }
 
 .lieux-section { text-align: center; max-width: none; margin: 0; padding: 120px 40px; }
 .lieux-title-wrap { max-width: 800px; margin: 0 auto; }
@@ -401,7 +400,7 @@ footer {
   .chateau-content { padding: 50px 30px; }
   .programme-section { padding: 80px 24px; }
   .timeline { padding: 20px 0; }
-  .timeline::before { left: 20px; }
+  .timeline::before { left: 20px; transform: none; }
   .timeline-item {
     flex-direction: row !important; text-align: left !important;
     margin-bottom: 50px; padding-left: 0;
@@ -413,7 +412,7 @@ footer {
   .timeline-content { padding: 0; }
   .timeline-content:last-child { display: none; }
   .timeline-time { font-size: 32px; }
-  .timeline-event { font-size: 11px; letter-spacing: 2px; }
+  .timeline-event { font-size: 11px; }
   .lieu-row { grid-template-columns: 1fr; text-align: center; gap: 20px; }
   .lieu-row-info { text-align: center; }
   .lieu-illustration { width: 140px; height: 160px; }
@@ -598,24 +597,32 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 document.querySelectorAll('.reveal, .lieu-row, .info-block, .hebergement-card').forEach(el => observer.observe(el));
 
-// Staggered timeline reveal
-const timelineEl = document.querySelector('.timeline');
-const timelineItems = document.querySelectorAll('.timeline-item');
-let timelineRevealed = false;
-const timelineObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && !timelineRevealed) {
-      timelineRevealed = true;
-      // Grow the vertical line
-      timelineEl.classList.add('timeline-line-grow');
-      // Stagger each item with 250ms delay between them
-      timelineItems.forEach((item, i) => {
-        setTimeout(() => { item.classList.add('visible'); }, i * 250);
-      });
-    }
-  });
-}, { threshold: 0.1 });
-if (timelineEl) timelineObserver.observe(timelineEl);
+// Scroll-driven timeline animation
+(function() {
+  const timeline = document.querySelector('.timeline');
+  if (!timeline) return;
+  const items = timeline.querySelectorAll('.timeline-item');
+  let ticking = false;
+
+  function update() {
+    const rect = timeline.getBoundingClientRect();
+    const triggerY = window.innerHeight * 0.7;
+    const progress = Math.max(0, Math.min(1, (triggerY - rect.top) / rect.height));
+    timeline.style.setProperty('--line-h', (progress * rect.height) + 'px');
+
+    items.forEach(item => {
+      const ir = item.getBoundingClientRect();
+      const dotY = ir.top + ir.height / 2;
+      if (dotY <= triggerY) item.classList.add('active');
+    });
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  update();
+})();
 document.querySelectorAll('nav a').forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
@@ -642,9 +649,9 @@ document.querySelectorAll('nav a').forEach(link => {
 
   // --- Config (matches your Grainient props) ---
   const cfg = {
-    color1: [236/255, 228/255, 198/255],  // #ece4c6
-    color2: [245/255, 183/255, 205/255],  // #f5b7cd
-    color3: [232/255, 216/255, 226/255],  // #e8d8e2
+    color1: [0.91, 0.84, 0.78],   // #e8d6c7 warm blush cream
+    color2: [0.72, 0.42, 0.52],   // #b86b85 dusty burgundy rose
+    color3: [0.83, 0.69, 0.73],   // #d4b0ba soft mauve burgundy
     timeSpeed: 0.45,
     colorBalance: 0.0,
     warpStrength: 1.0,
