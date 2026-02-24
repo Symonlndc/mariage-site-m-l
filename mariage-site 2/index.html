@@ -53,16 +53,17 @@
 * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
 html { scroll-behavior: smooth; overflow-x: hidden; }
 .cursor {
-  position: fixed; top: 0; left: 0; z-index: 9999;
+  position: fixed; z-index: 9999;
   width: 18px; height: 18px; border-radius: 50%;
   background: var(--burgundy);
   pointer-events: none;
-  opacity: 0; visibility: hidden;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.3s ease, visibility 0.3s ease, width 0.3s ease, height 0.3s ease;
+  opacity: 0;
+  margin-left: -9px; margin-top: -9px;
+  transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease, margin 0.3s ease;
+  will-change: left, top;
 }
-.cursor.visible { opacity: 1; visibility: visible; }
-.cursor.hover { width: 45px; height: 45px; mix-blend-mode: difference; }
+.cursor.visible { opacity: 1; }
+.cursor.hover { width: 45px; height: 45px; margin-left: -22.5px; margin-top: -22.5px; mix-blend-mode: difference; }
 
 body {
   font-family: 'OpeningHours', 'Josefin Sans', sans-serif;
@@ -622,17 +623,21 @@ footer {
 (function() {
   const cur = document.querySelector('.cursor');
   if (!cur || matchMedia('(pointer:coarse)').matches) return;
-  let mx = -100, my = -100, cx = -100, cy = -100;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  document.addEventListener('mouseenter', () => cur.classList.add('visible'));
+  let mx = 0, my = 0, cx = 0, cy = 0, started = false;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    if (!started) { cx = mx; cy = my; started = true; cur.classList.add('visible'); }
+  });
   document.addEventListener('mouseleave', () => cur.classList.remove('visible'));
+  document.addEventListener('mouseenter', () => { if (started) cur.classList.add('visible'); });
   const hovers = 'a, button, [href], input, textarea, .hebergement-card';
   document.addEventListener('mouseover', e => { if (e.target.closest(hovers)) cur.classList.add('hover'); });
   document.addEventListener('mouseout', e => { if (e.target.closest(hovers)) cur.classList.remove('hover'); });
   (function loop() {
-    cx += (mx - cx) * 0.15;
-    cy += (my - cy) * 0.15;
-    cur.style.transform = 'translate(' + cx + 'px,' + cy + 'px) translate(-50%,-50%)';
+    cx += (mx - cx) * 0.12;
+    cy += (my - cy) * 0.12;
+    cur.style.left = cx + 'px';
+    cur.style.top = cy + 'px';
     requestAnimationFrame(loop);
   })();
 })();
