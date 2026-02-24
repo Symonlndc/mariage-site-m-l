@@ -50,8 +50,19 @@
   --blush: #e8d5c4;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
 html { scroll-behavior: smooth; overflow-x: hidden; }
+.cursor {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--burgundy);
+  pointer-events: none;
+  opacity: 0; visibility: hidden;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease, visibility 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+.cursor.visible { opacity: 1; visibility: visible; }
+.cursor.hover { width: 45px; height: 45px; mix-blend-mode: difference; }
 
 body {
   font-family: 'OpeningHours', 'Josefin Sans', sans-serif;
@@ -452,6 +463,7 @@ footer {
 </head>
 <body>
 
+<div class="cursor" data-cursor></div>
 <div id="blob-bg" aria-hidden="true"></div>
 <svg id="grain-overlay" aria-hidden="true"><filter id="gf"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#gf)"/></svg>
 
@@ -606,6 +618,25 @@ footer {
 </footer>
 
 <script>
+// Custom cursor
+(function() {
+  const cur = document.querySelector('.cursor');
+  if (!cur || matchMedia('(pointer:coarse)').matches) return;
+  let mx = -100, my = -100, cx = -100, cy = -100;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  document.addEventListener('mouseenter', () => cur.classList.add('visible'));
+  document.addEventListener('mouseleave', () => cur.classList.remove('visible'));
+  const hovers = 'a, button, [href], input, textarea, .hebergement-card';
+  document.addEventListener('mouseover', e => { if (e.target.closest(hovers)) cur.classList.add('hover'); });
+  document.addEventListener('mouseout', e => { if (e.target.closest(hovers)) cur.classList.remove('hover'); });
+  (function loop() {
+    cx += (mx - cx) * 0.15;
+    cy += (my - cy) * 0.15;
+    cur.style.transform = 'translate(' + cx + 'px,' + cy + 'px) translate(-50%,-50%)';
+    requestAnimationFrame(loop);
+  })();
+})();
+
 // Hero line-reveal animation with stagger
 (function() {
   const names = document.querySelectorAll('.hero-names');
