@@ -52,68 +52,11 @@ body {
   overflow-x: hidden;
   position: relative;
 }
-.gradient-bg {
+#gradient-canvas {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   z-index: 0; pointer-events: none;
-  overflow: hidden;
 }
-.gradient-bg__blob {
-  position: absolute; border-radius: 50%;
-  filter: blur(120px); will-change: transform;
-}
-.gradient-bg__blob--1 {
-  width: 70vw; height: 70vw; max-width: 900px; max-height: 900px;
-  background: radial-gradient(circle, rgba(103,16,42,0.22) 0%, transparent 70%);
-  top: -20%; right: -15%;
-  animation: gBlob1 24s ease-in-out infinite;
-}
-.gradient-bg__blob--2 {
-  width: 60vw; height: 60vw; max-width: 800px; max-height: 800px;
-  background: radial-gradient(circle, rgba(184,149,106,0.2) 0%, transparent 70%);
-  top: 30%; left: -20%;
-  animation: gBlob2 28s ease-in-out infinite;
-}
-.gradient-bg__blob--3 {
-  width: 80vw; height: 80vw; max-width: 1000px; max-height: 1000px;
-  background: radial-gradient(circle, rgba(103,16,42,0.16) 0%, transparent 70%);
-  bottom: -10%; right: -10%;
-  animation: gBlob3 26s ease-in-out infinite;
-}
-.gradient-bg__blob--4 {
-  width: 50vw; height: 50vw; max-width: 700px; max-height: 700px;
-  background: radial-gradient(circle, rgba(232,213,196,0.3) 0%, transparent 70%);
-  top: 60%; left: 40%;
-  animation: gBlob4 20s ease-in-out infinite;
-}
-@keyframes gBlob1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  20% { transform: translate(-200px, 120px) scale(1.15); }
-  40% { transform: translate(100px, 250px) scale(0.9); }
-  60% { transform: translate(-150px, 180px) scale(1.1); }
-  80% { transform: translate(80px, 60px) scale(0.95); }
-}
-@keyframes gBlob2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  20% { transform: translate(200px, -100px) scale(1.12); }
-  40% { transform: translate(150px, 180px) scale(0.88); }
-  60% { transform: translate(-80px, 120px) scale(1.18); }
-  80% { transform: translate(100px, -60px) scale(0.92); }
-}
-@keyframes gBlob3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  20% { transform: translate(-150px, -180px) scale(1.2); }
-  40% { transform: translate(120px, -100px) scale(0.85); }
-  60% { transform: translate(200px, 80px) scale(1.1); }
-  80% { transform: translate(-100px, 150px) scale(0.95); }
-}
-@keyframes gBlob4 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  20% { transform: translate(-120px, 150px) scale(1.15); }
-  40% { transform: translate(180px, -80px) scale(0.9); }
-  60% { transform: translate(-60px, -130px) scale(1.12); }
-  80% { transform: translate(140px, 100px) scale(0.88); }
-}
-body > *:not(.gradient-bg) { position: relative; z-index: 1; }
+body > *:not(#gradient-canvas) { position: relative; z-index: 1; }
 
 nav {
   position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
@@ -485,12 +428,7 @@ footer {
 </head>
 <body>
 
-<div class="gradient-bg">
-  <div class="gradient-bg__blob gradient-bg__blob--1"></div>
-  <div class="gradient-bg__blob gradient-bg__blob--2"></div>
-  <div class="gradient-bg__blob gradient-bg__blob--3"></div>
-  <div class="gradient-bg__blob gradient-bg__blob--4"></div>
-</div>
+<canvas id="gradient-canvas"></canvas>
 
 <nav id="nav">
   <a href="#programme">Programme</a>
@@ -685,6 +623,131 @@ document.querySelectorAll('nav a').forEach(link => {
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
+
+// --- WebGL Grainient Background ---
+(function() {
+  const canvas = document.getElementById('gradient-canvas');
+  const gl = canvas.getContext('webgl');
+  if (!gl) return;
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio, 2);
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const vsSource = `attribute vec2 a_pos;void main(){gl_Position=vec4(a_pos,0,1);}`;
+
+  const fsSource = `
+precision mediump float;
+uniform float u_time;
+uniform vec2 u_res;
+
+vec3 permute(vec3 x){return mod(((x*34.0)+1.0)*x,289.0);}
+float snoise(vec2 v){
+  const vec4 C=vec4(0.211324865405187,0.366025403784439,-0.577350269189626,0.024390243902439);
+  vec2 i=floor(v+dot(v,C.yy));vec2 x0=v-i+dot(i,C.xx);
+  vec2 i1=(x0.x>x0.y)?vec2(1,0):vec2(0,1);
+  vec4 x12=x0.xyxy+C.xxzz;x12.xy-=i1;i=mod(i,289.0);
+  vec3 p=permute(permute(i.y+vec3(0,i1.y,1))+i.x+vec3(0,i1.x,1));
+  vec3 m=max(0.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.0);
+  m=m*m;m=m*m;
+  vec3 x=2.0*fract(p*C.www)-1.0;vec3 h=abs(x)-0.5;
+  vec3 ox=floor(x+0.5);vec3 a0=x-ox;
+  m*=1.79284291400159-0.85373472095314*(a0*a0+h*h);
+  vec3 g;g.x=a0.x*x0.x+h.x*x0.y;g.yz=a0.yz*x12.xz+h.yz*x12.yw;
+  return 130.0*dot(m,g);
+}
+
+void main(){
+  vec2 uv=gl_FragCoord.xy/u_res;
+  float aspect=u_res.x/u_res.y;
+  vec2 p=(uv-0.5)*vec2(aspect,1.0)/0.9;
+  float t=u_time*0.45;
+
+  // Warp
+  float wx=snoise(p*5.0+t*2.0)*1.0;
+  float wy=snoise(p*5.0+t*2.0+vec2(100.0))*1.0;
+  vec2 wp=p+vec2(wx,wy)*0.06;
+
+  // Rotation
+  float a=t*0.08;
+  float c=cos(a),s=sin(a);
+  wp=mat2(c,-s,s,c)*wp;
+
+  // 3-color blend with noise
+  float n1=snoise(wp*2.0+t*0.2);
+  float n2=snoise(wp*2.0+t*0.2+vec2(50.0));
+  float n3=snoise(wp*1.5-t*0.15+vec2(25.0));
+
+  vec3 col1=vec3(0.925,0.894,0.776);
+  vec3 col2=vec3(0.961,0.718,0.804);
+  vec3 col3=vec3(0.910,0.847,0.886);
+
+  float b1=smoothstep(-0.6,0.6,n1);
+  float b2=smoothstep(-0.6,0.6,n2);
+  float b3=smoothstep(-0.4,0.4,n3);
+
+  vec3 col=mix(col1,col2,b1);
+  col=mix(col,col3,b2*0.5);
+  col=mix(col,col1,b3*0.3);
+
+  // Contrast 1.5
+  col=(col-0.5)*1.5+0.5;
+  col=clamp(col,0.0,1.0);
+
+  // Film grain
+  float grain=fract(sin(dot(gl_FragCoord.xy+fract(t)*100.0,vec2(12.9898,78.233)))*43758.5453);
+  col+=(grain-0.5)*0.08;
+
+  gl_FragColor=vec4(col,1.0);
+}`;
+
+  function createShader(type, source) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, source);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      console.error(gl.getShaderInfoLog(s));
+      gl.deleteShader(s);
+      return null;
+    }
+    return s;
+  }
+
+  const vs = createShader(gl.VERTEX_SHADER, vsSource);
+  const fs = createShader(gl.FRAGMENT_SHADER, fsSource);
+  const prog = gl.createProgram();
+  gl.attachShader(prog, vs);
+  gl.attachShader(prog, fs);
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+    console.error(gl.getProgramInfoLog(prog));
+    return;
+  }
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const aPos = gl.getAttribLocation(prog, 'a_pos');
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_res');
+
+  function render(now) {
+    gl.uniform1f(uTime, now * 0.001);
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  requestAnimationFrame(render);
+})();
 </script>
 </body>
 </html>
