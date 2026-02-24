@@ -100,8 +100,8 @@ nav a:hover { color: var(--burgundy); }
 .hero-content { text-align: center; z-index: 1; position: relative; width: 100%; }
 .hero-names {
   font-family: 'FlorentineScript', serif;
-  font-size: clamp(68px, 15vw, 230px); line-height: 1.2;
-  font-weight: 400;
+  font-size: clamp(68px, 15vw, 230px); line-height: 1.05;
+  font-weight: 400; letter-spacing: -0.02em;
   color: var(--burgundy); display: block;
   white-space: nowrap;
   clip-path: inset(0 100% 0 0);
@@ -132,13 +132,13 @@ nav a:hover { color: var(--burgundy); }
 .section-title {
   font-family: 'FlorentineScript', serif;
   font-size: clamp(36px, 5vw, 56px); font-weight: 400; color: var(--burgundy);
-  margin-bottom: 40px; line-height: 1.2;
+  margin-bottom: 50px; line-height: 1.15; letter-spacing: -0.01em;
 }
 .section-divider {
-  width: 60px; height: 1px; background: var(--burgundy); margin: 0 auto 60px;
+  width: 60px; height: 1px; background: var(--burgundy); margin: 0 auto 70px;
 }
 
-.countdown-section { text-align: center; padding: 80px 40px; }
+.countdown-section { text-align: center; padding: 120px 40px; }
 .countdown { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; }
 .countdown-item { text-align: center; }
 .countdown-number {
@@ -162,7 +162,7 @@ nav a:hover { color: var(--burgundy); }
 .chateau-image img { width: 100%; height: 100%; object-fit: contain; padding: 40px; }
 .chateau-content {
   display: flex; flex-direction: column; justify-content: center;
-  padding: 80px;
+  padding: 100px;
 }
 .chateau-name {
   font-family: 'FlorentineScript', serif;
@@ -171,11 +171,11 @@ nav a:hover { color: var(--burgundy); }
 }
 .chateau-desc {
   font-family: 'OpeningHours', sans-serif;
-  font-size: 17px; line-height: 1.9; color: var(--burgundy); max-width: 480px; opacity: 0.7;
+  font-size: 17px; line-height: 1.75; color: var(--burgundy); max-width: 480px; opacity: 0.7;
 }
 
-.programme-section { text-align: center; padding: 120px 40px 140px; max-width: 1200px; margin: 0 auto; }
-.timeline { position: relative; max-width: 600px; margin: 0 auto; padding: 40px 0; }
+.programme-section { text-align: center; padding: 150px 40px 160px; max-width: 1200px; margin: 0 auto; }
+.timeline { position: relative; max-width: 600px; margin: 0 auto; padding: 60px 0; }
 .timeline::before {
   content: ''; position: absolute; left: 50%; top: 0; width: 1px;
   background: rgba(103,16,42,0.15);
@@ -213,14 +213,15 @@ nav a:hover { color: var(--burgundy); }
 .timeline-item.active .timeline-dot { opacity: 1; transform: scale(1); background: var(--burgundy); }
 .timeline-item.active:hover .timeline-dot { transform: scale(1.4); }
 
-.lieux-section { text-align: center; max-width: none; margin: 0; padding: 120px 40px; }
+.lieux-section { text-align: center; max-width: none; margin: 0; padding: 150px 40px; }
 .lieux-title-wrap { max-width: 800px; margin: 0 auto; }
 .lieux-stack { max-width: 750px; margin: 0 auto; }
 .lieu-row {
   display: grid; grid-template-columns: 180px 1fr; gap: 50px;
-  align-items: center; padding: 50px 0;
+  align-items: center; padding: 55px 0;
   border-top: 1px solid rgba(103,16,42,0.1);
-  opacity: 0; transform: translateY(30px); transition: all 0.6s ease;
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .lieu-row.visible { opacity: 1; transform: translateY(0); }
 .lieu-row:first-child { border-top: none; }
@@ -294,8 +295,8 @@ nav a:hover { color: var(--burgundy); }
 .infos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; max-width: 900px; margin: 0 auto; }
 .info-block {
   padding: 60px 50px;
-  transition: all 0.4s ease;
-  opacity: 0; transform: translateY(30px);
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .info-block.visible { opacity: 1; transform: translateY(0); }
 .info-illustration {
@@ -323,11 +324,11 @@ nav a:hover { color: var(--burgundy); }
 .info-link:hover::after { opacity: 1; }
 
 .hebergement-section {
-  max-width: none; margin: 0; padding: 120px 40px;
+  max-width: none; margin: 0; padding: 150px 40px;
   text-align: center;
 }
 .hebergement-section .section-title { font-size: clamp(36px, 5vw, 56px); }
-.hebergement-category { max-width: 1000px; margin: 0 auto 60px; }
+.hebergement-category { max-width: 1000px; margin: 0 auto 70px; }
 .hebergement-category:last-child { margin-bottom: 0; }
 .hebergement-category-title {
   font-family: 'FlorentineScript', serif;
@@ -340,14 +341,15 @@ nav a:hover { color: var(--burgundy); }
   padding: 30px 24px;
   border: 1px solid rgba(103,16,42,0.08); border-radius: 4px;
   text-align: left; background: rgba(245,237,224,0.5);
-  opacity: 0; transform: translateY(20px); transition: all 0.5s ease;
+  opacity: 0; transform: translateY(30px) scale(0.97);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none; color: inherit; display: block;
 }
-.hebergement-card.visible { opacity: 1; transform: translateY(0); }
+.hebergement-card.visible { opacity: 1; transform: translateY(0) scale(1); }
 .hebergement-card:hover {
   border-color: rgba(103,16,42,0.2);
   box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1);
 }
 .hebergement-card-name {
   font-family: 'OpeningHours', sans-serif;
@@ -364,7 +366,7 @@ nav a:hover { color: var(--burgundy); }
 }
 
 .rsvp-section {
-  text-align: center; padding: 140px 40px; position: relative; max-width: none; margin: 0;
+  text-align: center; padding: 160px 40px; position: relative; max-width: none; margin: 0;
 }
 .rsvp-content { position: relative; z-index: 1; }
 .rsvp-section .section-title { font-size: clamp(36px, 5vw, 56px); margin-bottom: 20px; }
@@ -375,7 +377,7 @@ nav a:hover { color: var(--burgundy); }
 }
 
 footer {
-  text-align: center; padding: 60px 40px;
+  text-align: center; padding: 80px 40px;
 }
 .footer-names {
   font-family: 'FlorentineScript', serif;
@@ -392,8 +394,16 @@ footer {
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.25,0.46,0.45,0.94); }
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
 .reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-scale {
+  opacity: 0; transform: translateY(30px) scale(0.97);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-scale.visible { opacity: 1; transform: translateY(0) scale(1); }
 
 @media (max-width: 768px) {
   nav { gap: 15px; padding: 15px 20px; flex-wrap: wrap; }
@@ -406,7 +416,7 @@ footer {
   .chateau-section { grid-template-columns: 1fr; }
   .chateau-image { min-height: 280px; }
   .chateau-content { padding: 50px 30px; }
-  .programme-section { padding: 80px 24px; }
+  .programme-section { padding: 100px 24px; }
   .timeline { padding: 20px 0; }
   .timeline::before { left: 20px; transform: none; }
   .timeline-item {
@@ -425,7 +435,7 @@ footer {
   .lieu-row-info { text-align: center; }
   .lieu-illustration { width: 140px; height: 160px; }
   .infos-grid { grid-template-columns: 1fr; }
-  .lieux-section, .infos-section, .hebergement-section { padding: 80px 24px; }
+  .lieux-section, .infos-section, .hebergement-section { padding: 100px 24px; }
   .hebergement-grid { grid-template-columns: 1fr; }
 }
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -459,21 +469,21 @@ footer {
 <div class="seamless-wrap">
 
 <div class="countdown-section">
-  <div class="countdown reveal">
-    <div class="countdown-item"><div class="countdown-number" id="days">--</div><div class="countdown-label">Jours</div></div>
-    <div class="countdown-item"><div class="countdown-number" id="hours">--</div><div class="countdown-label">Heures</div></div>
-    <div class="countdown-item"><div class="countdown-number" id="minutes">--</div><div class="countdown-label">Minutes</div></div>
-    <div class="countdown-item"><div class="countdown-number" id="seconds">--</div><div class="countdown-label">Secondes</div></div>
+  <div class="countdown">
+    <div class="countdown-item reveal"><div class="countdown-number" id="days">--</div><div class="countdown-label">Jours</div></div>
+    <div class="countdown-item reveal"><div class="countdown-number" id="hours">--</div><div class="countdown-label">Heures</div></div>
+    <div class="countdown-item reveal"><div class="countdown-number" id="minutes">--</div><div class="countdown-label">Minutes</div></div>
+    <div class="countdown-item reveal"><div class="countdown-number" id="seconds">--</div><div class="countdown-label">Secondes</div></div>
   </div>
 </div>
 
 <div class="chateau-section">
-  <div class="chateau-image"><img src="images/chateau.png" alt="Château de Saint Trys"></div>
+  <div class="chateau-image reveal-scale"><img src="images/chateau.png" alt="Château de Saint Trys"></div>
   <div class="chateau-content">
-    <h2 class="chateau-name">Château de Saint Trys</h2>
-    <p class="chateau-desc">Situé aux portes du Beaujolais, le Château de Saint Trys est le théâtre depuis 20 ans des plus grandes réceptions lyonnaises.</p>
+    <h2 class="chateau-name reveal">Château de Saint Trys</h2>
+    <p class="chateau-desc reveal">Situé aux portes du Beaujolais, le Château de Saint Trys est le théâtre depuis 20 ans des plus grandes réceptions lyonnaises.</p>
     <br>
-    <p class="chateau-desc">Le Cuvage de 580m2 permet d'accueillir jusqu'à 600 personnes pour des évènements privés ou professionnels. Idéalement situé au coeur de la propriété, le cadre plus intimiste de l'Orangerie s'accompagne d'un cloître d'inspiration italienne donnant sur la terrasse du château, offrant ainsi une vue imprenable sur la vallée de la Saône.</p>
+    <p class="chateau-desc reveal">Le Cuvage de 580m2 permet d'accueillir jusqu'à 600 personnes pour des évènements privés ou professionnels. Idéalement situé au coeur de la propriété, le cadre plus intimiste de l'Orangerie s'accompagne d'un cloître d'inspiration italienne donnant sur la terrasse du château, offrant ainsi une vue imprenable sur la vallée de la Saône.</p>
   </div>
 </div>
 
@@ -520,8 +530,8 @@ footer {
   <div class="infos-blob infos-blob--1"></div>
   <div class="infos-blob infos-blob--2"></div>
   <div class="infos-blob infos-blob--3"></div>
-  <h2 class="section-title" style="text-align:center;">Playlist & Liste de mariage</h2>
-  <div class="section-divider" style="background: var(--gold-light);"></div>
+  <h2 class="section-title reveal" style="text-align:center;">Playlist & Liste de mariage</h2>
+  <div class="section-divider reveal" style="background: var(--gold-light);"></div>
   <div class="infos-grid">
     <div class="info-block">
       <div class="info-illustration"><img src="images/playlist.png" alt="Playlist"></div>
@@ -583,9 +593,9 @@ footer {
 </div>
 
 <footer>
-  <p class="footer-names">M & L</p>
-  <p class="footer-date">29 Août 2026</p>
-  <span class="footer-heart">&#9829;</span>
+  <p class="footer-names reveal">M & L</p>
+  <p class="footer-date reveal">29 Août 2026</p>
+  <span class="footer-heart reveal">&#9829;</span>
 </footer>
 
 <script>
@@ -601,10 +611,26 @@ function updateCountdown() {
   document.getElementById('seconds').textContent = Math.floor((diff % 6e4) / 1e3);
 }
 updateCountdown(); setInterval(updateCountdown, 1000);
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-}, { threshold: 0.15 });
-document.querySelectorAll('.reveal, .lieu-row, .info-block, .hebergement-card').forEach(el => observer.observe(el));
+// Stagger-aware reveal observer
+(function() {
+  const staggerMap = new Map();
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const parent = el.parentElement;
+      // Determine stagger index among siblings that are also reveal targets
+      if (!staggerMap.has(parent)) staggerMap.set(parent, 0);
+      const idx = staggerMap.get(parent);
+      staggerMap.set(parent, idx + 1);
+      const delay = idx * 120; // 120ms stagger between siblings
+      el.style.transitionDelay = delay + 'ms';
+      requestAnimationFrame(() => { el.classList.add('visible'); });
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal, .reveal-scale, .lieu-row, .info-block, .hebergement-card').forEach(el => observer.observe(el));
+})();
 
 // Scroll-driven timeline animation
 (function() {
