@@ -47,7 +47,7 @@ html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   font-family: 'OpeningHours', 'Josefin Sans', sans-serif;
   font-weight: 400;
-  color: var(--charcoal);
+  color: var(--burgundy);
   background: var(--cream);
   overflow-x: hidden;
   position: relative;
@@ -130,8 +130,8 @@ nav.scrolled {
 }
 nav a {
   font-family: 'OpeningHours', sans-serif;
-  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--charcoal); text-decoration: none;
+  font-size: 12px; letter-spacing: 1px;
+  color: var(--burgundy); text-decoration: none;
   position: relative; padding: 4px 0; transition: color 0.3s;
 }
 nav a::after {
@@ -178,14 +178,9 @@ nav a:hover { color: var(--burgundy); }
   content: ''; width: 60px; height: 1px; background: var(--burgundy); opacity: 0.3;
 }
 
-.section-label {
-  font-family: 'OpeningHours', sans-serif;
-  font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
-  color: var(--burgundy); margin-bottom: 20px;
-}
 .section-title {
   font-family: 'FlorentineScript', serif;
-  font-size: clamp(36px, 5vw, 64px); font-weight: 400; color: var(--charcoal);
+  font-size: clamp(36px, 5vw, 56px); font-weight: 400; color: var(--burgundy);
   margin-bottom: 40px; line-height: 1.2;
 }
 .section-divider {
@@ -201,8 +196,8 @@ nav a:hover { color: var(--burgundy); }
 }
 .countdown-label {
   font-family: 'OpeningHours', sans-serif;
-  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-  color: var(--warm-gray); margin-top: 8px;
+  font-size: 12px; letter-spacing: normal;
+  color: var(--burgundy); margin-top: 8px; opacity: 0.7;
 }
 
 .chateau-section {
@@ -218,48 +213,55 @@ nav a:hover { color: var(--burgundy); }
   display: flex; flex-direction: column; justify-content: center;
   padding: 80px;
 }
-.chateau-title {
-  font-family: 'OpeningHours', sans-serif;
-  font-size: 14px; letter-spacing: 6px; text-transform: uppercase;
-  color: var(--burgundy); margin-bottom: 6px;
-}
 .chateau-name {
   font-family: 'FlorentineScript', serif;
-  font-size: clamp(28px, 3vw, 42px); font-weight: 400; color: var(--charcoal);
-  margin-bottom: 30px; line-height: 1.3;
+  font-size: clamp(36px, 5vw, 56px); font-weight: 400; color: var(--burgundy);
+  margin-bottom: 30px; line-height: 1.2;
 }
 .chateau-desc {
   font-family: 'OpeningHours', sans-serif;
-  font-size: 17px; line-height: 1.9; color: var(--warm-gray); max-width: 480px;
+  font-size: 17px; line-height: 1.9; color: var(--burgundy); max-width: 480px; opacity: 0.7;
 }
 
-.programme-section { text-align: center; padding: 120px 40px; max-width: 1200px; margin: 0 auto; }
-.timeline { position: relative; max-width: 600px; margin: 0 auto; padding: 20px 0; }
+.programme-section { text-align: center; padding: 120px 40px 140px; max-width: 1200px; margin: 0 auto; }
+.timeline { position: relative; max-width: 600px; margin: 0 auto; padding: 40px 0; }
 .timeline::before {
   content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px;
-  background: linear-gradient(to bottom, transparent, rgba(103,16,42,0.2), rgba(103,16,42,0.2), transparent);
+  background: rgba(103,16,42,0.12);
   transform: translateX(-50%);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 2s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.timeline.timeline-line-grow::before {
+  clip-path: inset(0 0 0% 0);
 }
 .timeline-item {
-  display: flex; align-items: center; margin-bottom: 50px;
-  opacity: 0; transform: translateY(30px); transition: all 0.6s ease;
+  display: flex; align-items: center; margin-bottom: 80px;
+  opacity: 0; transform: translateY(50px);
+  transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
 }
+.timeline-item:last-child { margin-bottom: 0; }
 .timeline-item.visible { opacity: 1; transform: translateY(0); }
 .timeline-item:nth-child(odd) { flex-direction: row; text-align: right; }
 .timeline-item:nth-child(even) { flex-direction: row-reverse; text-align: left; }
-.timeline-content { flex: 1; padding: 0 40px; }
-.timeline-time { font-family: 'OpeningHours', sans-serif; font-size: 28px; color: var(--burgundy); }
+.timeline-content { flex: 1; padding: 0 50px; }
+.timeline-time {
+  font-family: 'FlorentineScript', serif; font-size: 42px; color: var(--burgundy);
+  font-weight: 400; line-height: 1.1;
+}
 .timeline-event {
   font-family: 'OpeningHours', sans-serif;
-  font-size: 14px; letter-spacing: 2px; text-transform: uppercase;
-  color: var(--charcoal); margin-top: 4px;
+  font-size: 14px; letter-spacing: normal;
+  color: var(--burgundy); margin-top: 8px; opacity: 0.7;
 }
 .timeline-dot {
-  width: 12px; height: 12px; border-radius: 50%;
+  width: 10px; height: 10px; border-radius: 50%;
   background: var(--cream); border: 2px solid var(--burgundy);
-  flex-shrink: 0; z-index: 1; transition: all 0.3s ease;
+  flex-shrink: 0; z-index: 1;
+  transition: background 0.4s ease, transform 0.4s ease;
 }
-.timeline-item:hover .timeline-dot { background: var(--burgundy); transform: scale(1.3); }
+.timeline-item.visible .timeline-dot { background: var(--burgundy); transform: scale(1); }
+.timeline-item:hover .timeline-dot { transform: scale(1.4); }
 
 .lieux-section { text-align: center; max-width: none; margin: 0; padding: 120px 40px; }
 .lieux-title-wrap { max-width: 800px; margin: 0 auto; }
@@ -280,13 +282,13 @@ nav a:hover { color: var(--burgundy); }
 .lieu-illustration img { width: 100%; height: 100%; object-fit: contain; padding: 15px; }
 .lieu-row-info { text-align: left; }
 .lieu-row-name {
-  font-family: 'OpeningHours', sans-serif;
-  font-size: 13px; letter-spacing: 4px; text-transform: uppercase;
-  color: var(--charcoal); margin-bottom: 12px;
+  font-family: 'FlorentineScript', serif;
+  font-size: 28px; font-weight: 400;
+  color: var(--burgundy); margin-bottom: 12px; line-height: 1.2;
 }
 .lieu-row-address {
   font-family: 'OpeningHours', sans-serif;
-  font-size: 16px; color: var(--warm-gray); line-height: 1.7; margin-bottom: 20px;
+  font-size: 16px; color: var(--burgundy); line-height: 1.7; margin-bottom: 20px; opacity: 0.7;
 }
 .lieu-row-link {
   font-family: 'OpeningHours', sans-serif; font-style: italic;
@@ -338,7 +340,6 @@ nav a:hover { color: var(--burgundy); }
   50% { transform: translate(50px, -20px) scale(1.05); }
 }
 .infos-section > *:not(.infos-blob) { position: relative; z-index: 1; }
-.infos-section .section-label { color: var(--gold-light); }
 .infos-section .section-title { color: var(--cream); }
 .infos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; max-width: 900px; margin: 0 auto; }
 .info-block {
@@ -353,8 +354,8 @@ nav a:hover { color: var(--burgundy); }
 }
 .info-illustration img { width: 100%; height: 100%; object-fit: contain; }
 .info-title {
-  font-family: 'OpeningHours', sans-serif;
-  font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+  font-family: 'FlorentineScript', serif;
+  font-size: 26px; letter-spacing: normal; font-weight: 400;
   color: var(--cream); margin-bottom: 16px;
 }
 .info-desc {
@@ -375,12 +376,12 @@ nav a:hover { color: var(--burgundy); }
   max-width: none; margin: 0; padding: 120px 40px;
   text-align: center;
 }
-.hebergement-section .section-title { font-size: clamp(32px, 4vw, 56px); }
+.hebergement-section .section-title { font-size: clamp(36px, 5vw, 56px); }
 .hebergement-category { max-width: 1000px; margin: 0 auto 60px; }
 .hebergement-category:last-child { margin-bottom: 0; }
 .hebergement-category-title {
-  font-family: 'OpeningHours', sans-serif;
-  font-size: 11px; letter-spacing: 5px; text-transform: uppercase;
+  font-family: 'FlorentineScript', serif;
+  font-size: 26px; letter-spacing: normal; font-weight: 400;
   color: var(--burgundy); margin-bottom: 30px; padding-bottom: 14px;
   border-bottom: 1px solid rgba(103,16,42,0.15);
 }
@@ -400,11 +401,11 @@ nav a:hover { color: var(--burgundy); }
 }
 .hebergement-card-name {
   font-family: 'OpeningHours', sans-serif;
-  font-size: 20px; color: var(--charcoal); margin-bottom: 10px; line-height: 1.3;
+  font-size: 20px; color: var(--burgundy); margin-bottom: 10px; line-height: 1.3;
 }
 .hebergement-card-details {
   font-family: 'OpeningHours', sans-serif;
-  font-size: 11px; letter-spacing: 1px; color: var(--warm-gray); line-height: 1.8;
+  font-size: 12px; letter-spacing: normal; color: var(--burgundy); line-height: 1.8; opacity: 0.7;
 }
 .hebergement-card-details span { display: block; }
 .hebergement-card-distance {
@@ -419,8 +420,8 @@ nav a:hover { color: var(--burgundy); }
 .rsvp-section .section-title { font-size: clamp(36px, 5vw, 56px); margin-bottom: 20px; }
 .rsvp-text {
   font-family: 'OpeningHours', sans-serif; font-style: italic;
-  font-size: 20px; color: var(--warm-gray);
-  max-width: 500px; margin: 0 auto 40px; line-height: 1.6;
+  font-size: 20px; color: var(--burgundy);
+  max-width: 500px; margin: 0 auto 40px; line-height: 1.6; opacity: 0.7;
 }
 
 footer {
@@ -428,11 +429,11 @@ footer {
 }
 .footer-names {
   font-family: 'FlorentineScript', serif;
-  font-size: 28px; color: var(--charcoal); margin-bottom: 12px;
+  font-size: 28px; color: var(--burgundy); margin-bottom: 12px;
 }
 .footer-date {
   font-family: 'OpeningHours', sans-serif;
-  font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--warm-gray);
+  font-size: 12px; letter-spacing: normal; color: var(--burgundy); opacity: 0.7;
 }
 .footer-heart {
   color: var(--burgundy); font-size: 16px; margin-top: 20px;
@@ -456,9 +457,20 @@ footer {
   .chateau-image { min-height: 280px; }
   .chateau-content { padding: 50px 30px; }
   .programme-section { padding: 80px 24px; }
-  .timeline-item { flex-direction: column !important; text-align: center !important; margin-bottom: 40px; }
-  .timeline-content { padding: 15px 0; }
-  .timeline::before { display: none; }
+  .timeline { padding: 20px 0; }
+  .timeline::before { left: 20px; }
+  .timeline-item {
+    flex-direction: row !important; text-align: left !important;
+    margin-bottom: 50px; padding-left: 0;
+  }
+  .timeline-item:nth-child(odd), .timeline-item:nth-child(even) {
+    flex-direction: row !important; text-align: left !important;
+  }
+  .timeline-dot { margin: 0 20px 0 14px; }
+  .timeline-content { padding: 0; }
+  .timeline-content:last-child { display: none; }
+  .timeline-time { font-size: 32px; }
+  .timeline-event { font-size: 11px; letter-spacing: 2px; }
   .lieu-row { grid-template-columns: 1fr; text-align: center; gap: 20px; }
   .lieu-row-info { text-align: center; }
   .lieu-illustration { width: 140px; height: 160px; }
@@ -512,8 +524,7 @@ footer {
 <div class="chateau-section">
   <div class="chateau-image"><img src="images/chateau.png" alt="Château de Saint Trys"></div>
   <div class="chateau-content">
-    <p class="chateau-title">Château de</p>
-    <h2 class="chateau-name">Saint Trys</h2>
+    <h2 class="chateau-name">Château de Saint Trys</h2>
     <p class="chateau-desc">Situé aux portes du Beaujolais, le Château de Saint Trys est le théâtre depuis 20 ans des plus grandes réceptions lyonnaises.</p>
     <br>
     <p class="chateau-desc">Le Cuvage de 580m2 permet d'accueillir jusqu'à 600 personnes pour des évènements privés ou professionnels. Idéalement situé au coeur de la propriété, le cadre plus intimiste de l'Orangerie s'accompagne d'un cloître d'inspiration italienne donnant sur la terrasse du château, offrant ainsi une vue imprenable sur la vallée de la Saône.</p>
@@ -521,7 +532,6 @@ footer {
 </div>
 
 <div class="programme-section" id="programme">
-  <p class="section-label reveal" style="text-align:center;">Le déroulé</p>
   <h2 class="section-title reveal" style="text-align:center;">Programme de la journée</h2>
   <div class="section-divider reveal"></div>
   <div class="timeline">
@@ -535,7 +545,6 @@ footer {
 
 <div class="lieux-section" id="lieux">
   <div class="lieux-title-wrap">
-    <p class="section-label reveal" style="text-align:center;">Les adresses</p>
     <h2 class="section-title reveal" style="text-align:center;">Lieux de célébration</h2>
     <div class="section-divider reveal"></div>
   </div>
@@ -565,7 +574,6 @@ footer {
   <div class="infos-blob infos-blob--1"></div>
   <div class="infos-blob infos-blob--2"></div>
   <div class="infos-blob infos-blob--3"></div>
-  <p class="section-label" style="text-align:center;">Pour vous</p>
   <h2 class="section-title" style="text-align:center;">Playlist & Liste de mariage</h2>
   <div class="section-divider" style="background: var(--gold-light);"></div>
   <div class="infos-grid">
@@ -585,7 +593,6 @@ footer {
 </div>
 
 <div class="hebergement-section" id="hebergement">
-  <p class="section-label reveal" style="text-align:center;">Où dormir</p>
   <h2 class="section-title reveal" style="text-align:center;">Hébergement</h2>
   <div class="section-divider reveal"></div>
 
@@ -624,7 +631,6 @@ footer {
 
 <div class="rsvp-section" id="rsvp">
   <div class="rsvp-content">
-    <p class="section-label reveal" style="text-align:center;">Répondez-nous</p>
     <h2 class="section-title reveal" style="text-align:center;">Confirmez votre présence</h2>
     <p class="rsvp-text reveal">Merci de répondre au questionnaire reçu avec votre faire-part en scannant le QR code au dos de votre carton d'invitation.</p>
   </div>
@@ -652,7 +658,26 @@ updateCountdown(); setInterval(updateCountdown, 1000);
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
 }, { threshold: 0.15 });
-document.querySelectorAll('.reveal, .timeline-item, .lieu-row, .info-block, .hebergement-card').forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal, .lieu-row, .info-block, .hebergement-card').forEach(el => observer.observe(el));
+
+// Staggered timeline reveal
+const timelineEl = document.querySelector('.timeline');
+const timelineItems = document.querySelectorAll('.timeline-item');
+let timelineRevealed = false;
+const timelineObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !timelineRevealed) {
+      timelineRevealed = true;
+      // Grow the vertical line
+      timelineEl.classList.add('timeline-line-grow');
+      // Stagger each item with 250ms delay between them
+      timelineItems.forEach((item, i) => {
+        setTimeout(() => { item.classList.add('visible'); }, i * 250);
+      });
+    }
+  });
+}, { threshold: 0.1 });
+if (timelineEl) timelineObserver.observe(timelineEl);
 document.querySelectorAll('nav a').forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
