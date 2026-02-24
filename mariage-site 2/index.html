@@ -54,16 +54,15 @@
 html { scroll-behavior: smooth; overflow-x: hidden; }
 .cursor {
   position: fixed; z-index: 9999;
-  width: 18px; height: 18px; border-radius: 50%;
+  width: 16px; height: 16px; border-radius: 50%;
   background: var(--burgundy);
   pointer-events: none;
   opacity: 0;
-  margin-left: -9px; margin-top: -9px;
-  transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease, margin 0.3s ease;
+  margin-left: -8px; margin-top: -8px;
+  transition: opacity 0.3s ease;
   will-change: left, top;
 }
 .cursor.visible { opacity: 1; }
-.cursor.hover { width: 45px; height: 45px; margin-left: -22.5px; margin-top: -22.5px; mix-blend-mode: difference; }
 
 body {
   font-family: 'OpeningHours', 'Josefin Sans', sans-serif;
@@ -271,46 +270,9 @@ nav a:hover { color: var(--burgundy); }
 .lieu-row-link:hover::after { opacity: 1; }
 
 .infos-section {
-  text-align: center; color: var(--cream);
-  max-width: none; padding: 200px 40px 200px; margin: 0;
-  position: relative;
+  text-align: center;
+  max-width: none; padding: 150px 40px; margin: 0;
 }
-.infos-blob {
-  position: absolute; border-radius: 50%;
-  filter: blur(100px); pointer-events: none;
-}
-.infos-blob--1 {
-  width: 80%; height: 70%;
-  background: radial-gradient(circle, rgba(103,16,42,0.85) 0%, rgba(103,16,42,0.4) 40%, transparent 70%);
-  top: 10%; left: 10%;
-  animation: infoBlobMove1 14s ease-in-out infinite;
-}
-.infos-blob--2 {
-  width: 60%; height: 60%;
-  background: radial-gradient(circle, rgba(103,16,42,0.7) 0%, rgba(103,16,42,0.3) 40%, transparent 70%);
-  top: 20%; right: -10%;
-  animation: infoBlobMove2 18s ease-in-out infinite;
-}
-.infos-blob--3 {
-  width: 50%; height: 50%;
-  background: radial-gradient(circle, rgba(78,12,32,0.6) 0%, transparent 70%);
-  bottom: 5%; left: -5%;
-  animation: infoBlobMove3 16s ease-in-out infinite;
-}
-@keyframes infoBlobMove1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(40px, -30px) scale(1.08); }
-}
-@keyframes infoBlobMove2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-60px, 40px) scale(1.1); }
-}
-@keyframes infoBlobMove3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(50px, -20px) scale(1.05); }
-}
-.infos-section > *:not(.infos-blob) { position: relative; z-index: 1; }
-.infos-section .section-title { color: var(--cream); }
 .infos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; max-width: 900px; margin: 0 auto; }
 .info-block {
   padding: 60px 50px;
@@ -326,19 +288,19 @@ nav a:hover { color: var(--burgundy); }
 .info-title {
   font-family: 'RecifeDisplay', serif;
   font-size: 26px; letter-spacing: normal; font-weight: 400;
-  color: var(--cream); margin-bottom: 16px;
+  color: var(--burgundy); margin-bottom: 16px;
 }
 .info-desc {
   font-family: 'OpeningHours', sans-serif;
-  font-size: 16px; color: rgba(245,237,224,0.6); line-height: 1.8; margin-bottom: 28px;
+  font-size: 16px; color: var(--burgundy); opacity: 0.7; line-height: 1.8; margin-bottom: 28px;
 }
 .info-link {
   font-family: 'OpeningHours', sans-serif; font-style: italic;
-  font-size: 16px; color: var(--gold-light); text-decoration: none; position: relative;
+  font-size: 16px; color: var(--burgundy); text-decoration: none; position: relative;
 }
 .info-link::after {
   content: ''; position: absolute; bottom: -2px; left: 0;
-  width: 100%; height: 1px; background: var(--gold-light); opacity: 0.3; transition: opacity 0.3s;
+  width: 100%; height: 1px; background: var(--burgundy); opacity: 0.3; transition: opacity 0.3s;
 }
 .info-link:hover::after { opacity: 1; }
 
@@ -547,11 +509,8 @@ footer {
 </div>
 
 <div class="infos-section" id="playlist">
-  <div class="infos-blob infos-blob--1"></div>
-  <div class="infos-blob infos-blob--2"></div>
-  <div class="infos-blob infos-blob--3"></div>
   <h2 class="section-title reveal" style="text-align:center;">Playlist & Liste de mariage</h2>
-  <div class="section-divider reveal" style="background: var(--gold-light);"></div>
+  <div class="section-divider reveal"></div>
   <div class="infos-grid">
     <div class="info-block">
       <div class="info-illustration"><img src="images/playlist.png" alt="Playlist"></div>
@@ -630,12 +589,9 @@ footer {
   });
   document.addEventListener('mouseleave', () => cur.classList.remove('visible'));
   document.addEventListener('mouseenter', () => { if (started) cur.classList.add('visible'); });
-  const hovers = 'a, button, [href], input, textarea, .hebergement-card';
-  document.addEventListener('mouseover', e => { if (e.target.closest(hovers)) cur.classList.add('hover'); });
-  document.addEventListener('mouseout', e => { if (e.target.closest(hovers)) cur.classList.remove('hover'); });
   (function loop() {
-    cx += (mx - cx) * 0.12;
-    cy += (my - cy) * 0.12;
+    cx += (mx - cx) * 0.25;
+    cy += (my - cy) * 0.25;
     cur.style.left = cx + 'px';
     cur.style.top = cy + 'px';
     requestAnimationFrame(loop);
