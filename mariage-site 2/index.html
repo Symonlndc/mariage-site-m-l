@@ -28,9 +28,11 @@
 }
 @font-face {
   font-family: 'RecifeDisplay';
-  src: url('fonts/RecifeDisplay-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
+  src: url('fonts/RecifeDisplay-LightItalic.woff2') format('woff2'),
+       url('fonts/RecifeDisplay-LightItalic.woff') format('woff'),
+       url('fonts/RecifeDisplay-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
   font-display: swap;
 }
 
@@ -138,7 +140,7 @@ nav a:hover { color: var(--burgundy); }
 
 .section-title {
   font-family: 'RecifeDisplay', serif;
-  font-size: 3rem; font-weight: 400; color: var(--burgundy);
+  font-size: 3rem; font-weight: 300; font-style: italic; color: var(--burgundy);
   margin-bottom: 50px; line-height: 1;
 }
 .section-divider {
@@ -173,7 +175,7 @@ nav a:hover { color: var(--burgundy); }
 }
 .chateau-name {
   font-family: 'RecifeDisplay', serif;
-  font-size: 3rem; font-weight: 400; color: var(--burgundy);
+  font-size: 3rem; font-weight: 300; font-style: italic; color: var(--burgundy);
   margin-bottom: 30px; line-height: 1;
 }
 .chateau-desc {
