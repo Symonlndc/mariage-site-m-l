@@ -233,24 +233,20 @@ nav a:hover { color: var(--burgundy); }
 
 .lieux-section { text-align: center; max-width: none; margin: 0; padding: 150px 40px; }
 .lieux-title-wrap { max-width: 900px; margin: 0 auto; }
-.lieux-stack { max-width: 520px; margin: 0 auto; }
+.lieux-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 0; max-width: 900px; margin: 0 auto; }
 .lieu-row {
-  position: relative;
-  padding: 66px 0;
-  border-top: 1px solid rgba(103,16,42,0.1);
+  padding: 60px 50px; text-align: center;
   opacity: 0; transform: translateY(40px);
   transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .lieu-row.visible { opacity: 1; transform: translateY(0); }
-.lieu-row:first-child { border-top: none; }
 .lieu-illustration {
-  position: absolute; right: calc(100% + 40px); top: 50%; transform: translateY(-50%);
-  width: 216px; height: 240px;
+  width: 140px; height: 140px;
   display: flex; align-items: center; justify-content: center;
-  border-radius: 4px; overflow: hidden;
+  margin: 0 auto 28px; overflow: hidden;
 }
-.lieu-illustration img { width: 100%; height: 100%; object-fit: contain; padding: 18px; }
-.lieu-row-info { text-align: left; }
+.lieu-illustration img { width: 100%; height: 100%; object-fit: contain; }
+.lieu-row-info { text-align: center; }
 .lieu-row-name {
   font-family: 'RecifeDisplay', serif;
   font-size: 34px; font-weight: 400;
@@ -282,22 +278,22 @@ nav a:hover { color: var(--burgundy); }
 }
 .info-block.visible { opacity: 1; transform: translateY(0); }
 .info-illustration {
-  width: 120px; height: 120px; margin: 0 auto 28px;
+  width: 140px; height: 140px; margin: 0 auto 28px;
   display: flex; align-items: center; justify-content: center; overflow: hidden;
 }
 .info-illustration img { width: 100%; height: 100%; object-fit: contain; }
 .info-title {
   font-family: 'RecifeDisplay', serif;
-  font-size: 26px; letter-spacing: normal; font-weight: 400;
+  font-size: 34px; letter-spacing: normal; font-weight: 400;
   color: var(--burgundy); margin-bottom: 16px;
 }
 .info-desc {
   font-family: 'OpeningHours', sans-serif;
-  font-size: 16px; color: var(--burgundy); opacity: 0.7; line-height: 1.8; margin-bottom: 28px;
+  font-size: 19px; color: var(--burgundy); opacity: 0.7; line-height: 1.8; margin-bottom: 28px;
 }
 .info-link {
   font-family: 'OpeningHours', sans-serif; font-style: italic;
-  font-size: 16px; color: var(--burgundy); text-decoration: none; position: relative;
+  font-size: 19px; color: var(--burgundy); text-decoration: none; position: relative;
 }
 .info-link::after {
   content: ''; position: absolute; bottom: -2px; left: 0;
@@ -413,9 +409,8 @@ footer {
   .timeline-content:last-child { display: none; }
   .timeline-time { font-size: 48px; }
   .timeline-event { font-size: 16px; }
-  .lieu-row { grid-template-columns: 1fr; text-align: center; gap: 20px; }
-  .lieu-row-info { text-align: center; }
-  .lieu-illustration { width: 140px; height: 160px; }
+  .lieux-stack { grid-template-columns: 1fr; }
+  .lieu-illustration { width: 120px; height: 120px; }
   .infos-grid { grid-template-columns: 1fr; }
   .lieux-section, .infos-section, .hebergement-section { padding: 100px 24px; }
   .hebergement-grid { grid-template-columns: 1fr; }
