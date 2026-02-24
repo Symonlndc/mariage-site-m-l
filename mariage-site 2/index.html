@@ -82,90 +82,54 @@ nav a:hover { color: var(--burgundy); }
   height: 100vh;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   position: relative; overflow: hidden;
-  background: var(--cream);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(103,16,42,0.12), transparent 50%),
+    radial-gradient(ellipse 80% 50% at 80% 50%, rgba(184,149,106,0.1), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 20% 50%, rgba(103,16,42,0.08), transparent 50%),
+    linear-gradient(to bottom, rgba(253,251,247,0.95), var(--cream));
 }
-.hero-bg {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden;
+.hero::before {
+  content: "";
+  position: absolute; inset: -15% -10% 10% -10%;
+  pointer-events: none;
+  background:
+    radial-gradient(80% 60% at 50% 0%, rgba(245,237,224,0.9) 0%, rgba(245,237,224,0.5) 25%, transparent 60%),
+    radial-gradient(70% 50% at 50% 100%, rgba(232,213,196,0.3) 0%, transparent 60%);
+  mix-blend-mode: screen;
+  animation: heroGlowPulse 10s ease-in-out infinite;
+  z-index: 0;
 }
-.hero-blob {
-  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.5;
-}
-.hero-blob--1 {
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(103,16,42,0.25) 0%, transparent 70%);
-  top: -10%; left: -10%;
-  animation: blobMove1 12s ease-in-out infinite;
-}
-.hero-blob--2 {
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(103,16,42,0.18) 0%, transparent 70%);
-  bottom: -15%; right: -10%;
-  animation: blobMove2 14s ease-in-out infinite;
-}
-.hero-blob--3 {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(184,149,106,0.2) 0%, transparent 70%);
-  top: 40%; left: 50%;
-  animation: blobMove3 10s ease-in-out infinite;
-}
-@keyframes blobMove1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(80px, 60px) scale(1.1); }
-  66% { transform: translate(-40px, 30px) scale(0.95); }
-}
-@keyframes blobMove2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-70px, -50px) scale(1.05); }
-  66% { transform: translate(50px, -30px) scale(1.1); }
-}
-@keyframes blobMove3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-60px, 40px) scale(1.15); }
-  66% { transform: translate(40px, -60px) scale(0.9); }
+@keyframes heroGlowPulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.03); }
 }
 .hero-content { text-align: center; z-index: 1; position: relative; width: 100%; }
-.hero-names-wrap {
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-}
 .hero-names {
   font-family: 'FlorentineScript', serif;
-  font-size: clamp(100px, 22vw, 340px); line-height: 0.9;
+  font-size: clamp(80px, 17.5vw, 270px); line-height: 0.9;
   font-weight: 400;
-  color: var(--charcoal); display: inline-block;
+  color: var(--charcoal); display: block;
   white-space: nowrap;
+  clip-path: inset(0 100% 0 0);
 }
-.hero-names-wrap--margaux {
-  display: block; text-align: center; margin-left: -20%;
-  border-right: 3px solid var(--burgundy);
-  width: 0; overflow: hidden;
-  animation: typewriteMargaux 1.8s steps(7, end) 0.5s forwards, blinkCaret 0.6s step-end 0.5s 5;
+.hero-names--margaux {
+  margin-left: -20%;
+  animation: handwrite 2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.5s forwards;
 }
-.hero-names-wrap--leopold {
-  display: block; text-align: center; margin-left: 20%;
-  border-right: 3px solid var(--burgundy);
-  width: 0; overflow: hidden;
-  animation: typewriteLeopold 1.8s steps(7, end) 3s forwards, blinkCaret 0.6s step-end 3s 5;
+.hero-names--leopold {
+  margin-left: 20%;
+  animation: handwrite 2s cubic-bezier(0.22, 0.61, 0.36, 1) 2.8s forwards;
 }
-@keyframes typewriteMargaux {
-  from { width: 0; }
-  to { width: 80%; border-right-color: transparent; }
-}
-@keyframes typewriteLeopold {
-  from { width: 0; }
-  to { width: 80%; border-right-color: transparent; }
-}
-@keyframes blinkCaret {
-  0%, 100% { border-right-color: var(--burgundy); }
-  50% { border-right-color: transparent; }
+@keyframes handwrite {
+  0% { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0% 0 0); }
 }
 .hero-et {
   font-family: 'FlorentineScript', serif; font-style: italic;
   font-size: clamp(22px, 3.5vw, 40px); font-weight: 400; color: var(--burgundy);
   display: flex; align-items: center; justify-content: center; gap: 20px;
   margin: 15px 0;
-  opacity: 0; animation: fadeUp 0.8s ease 2.5s forwards;
+  opacity: 0; animation: fadeUp 0.8s ease 2.3s forwards;
 }
 .hero-et::before, .hero-et::after {
   content: ''; width: 60px; height: 1px; background: var(--burgundy); opacity: 0.3;
@@ -416,12 +380,9 @@ footer {
 @media (max-width: 768px) {
   nav { gap: 15px; padding: 15px 20px; flex-wrap: wrap; }
   nav a { font-size: 9px; letter-spacing: 2px; }
-  .hero-names { font-size: clamp(60px, 18vw, 120px); }
-  .hero-names-wrap--margaux { margin-left: -10%; }
-  .hero-names-wrap--leopold { margin-left: 10%; }
-  .hero-blob--1 { width: 300px; height: 300px; }
-  .hero-blob--2 { width: 250px; height: 250px; }
-  .hero-blob--3 { width: 200px; height: 200px; }
+  .hero-names { font-size: clamp(50px, 14vw, 100px); }
+  .hero-names--margaux { margin-left: -10%; }
+  .hero-names--leopold { margin-left: 10%; }
   .countdown { gap: 30px; }
   .countdown-number { font-size: 40px; }
   .chateau-section { grid-template-columns: 1fr; }
@@ -455,16 +416,11 @@ footer {
 </nav>
 
 <section class="hero" id="hero">
-  <div class="hero-bg">
-    <div class="hero-blob hero-blob--1"></div>
-    <div class="hero-blob hero-blob--2"></div>
-    <div class="hero-blob hero-blob--3"></div>
-  </div>
   <div class="hero-content">
     <h1>
-      <div class="hero-names-wrap hero-names-wrap--margaux"><span class="hero-names">Margaux</span></div>
+      <span class="hero-names hero-names--margaux">Margaux</span>
       <span class="hero-et">et</span>
-      <div class="hero-names-wrap hero-names-wrap--leopold"><span class="hero-names">Léopold</span></div>
+      <span class="hero-names hero-names--leopold">Léopold</span>
     </h1>
   </div>
 </section>
