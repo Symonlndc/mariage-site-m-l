@@ -339,13 +339,10 @@ nav a:hover { color: var(--burgundy); }
 .infos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; max-width: 900px; margin: 0 auto; }
 .info-block {
   padding: 60px 50px;
-  border: 1px solid rgba(245,237,224,0.1);
   transition: all 0.4s ease;
   opacity: 0; transform: translateY(30px);
 }
 .info-block.visible { opacity: 1; transform: translateY(0); }
-.info-block:first-child { border-right: 1px solid rgba(245,237,224,0.1); }
-.info-block:hover { background: rgba(245,237,224,0.05); }
 .info-illustration {
   width: 120px; height: 120px; margin: 0 auto 28px;
   display: flex; align-items: center; justify-content: center; overflow: hidden;
@@ -462,7 +459,6 @@ footer {
   .lieu-row-info { text-align: center; }
   .lieu-illustration { width: 140px; height: 160px; }
   .infos-grid { grid-template-columns: 1fr; }
-  .info-block:first-child { border-right: none; border-bottom: 1px solid rgba(245,237,224,0.1); }
   .lieux-section, .infos-section, .hebergement-section { padding: 80px 24px; }
   .hebergement-grid { grid-template-columns: 1fr; }
 }
