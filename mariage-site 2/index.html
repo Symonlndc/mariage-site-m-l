@@ -79,16 +79,17 @@ nav {
   position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
   padding: 20px 40px;
   display: flex; justify-content: center; gap: 30px;
-  transition: all 0.5s ease;
+  transition: transform 0.4s ease;
   background: transparent;
 }
+nav.hidden { transform: translateY(-100%); }
 nav.scrolled {
   background: transparent;
   padding: 14px 40px;
 }
 nav a {
   font-family: 'OpeningHours', sans-serif;
-  font-size: 1.4rem; letter-spacing: 1px; text-transform: uppercase;
+  font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase;
   color: var(--burgundy); text-decoration: none;
   position: relative; padding: 4px 0; transition: color 0.3s;
 }
@@ -607,7 +608,12 @@ footer {
 
 <script>
 const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 80); });
+let lastScrollY = 0;
+window.addEventListener('scroll', () => {
+  const sy = window.scrollY;
+  nav.classList.toggle('hidden', sy > lastScrollY && sy > 80);
+  lastScrollY = sy;
+}, { passive: true });
 const weddingDate = new Date('2026-08-29T16:00:00');
 function updateCountdown() {
   const now = new Date(), diff = weddingDate - now;
