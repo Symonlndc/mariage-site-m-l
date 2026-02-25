@@ -390,31 +390,57 @@ footer {
 /* Hamburger toggle */
 .nav-toggle {
   display: none; background: none; border: none; cursor: pointer;
-  width: 28px; height: 20px; position: relative; padding: 0;
+  width: 44px; height: 44px; position: relative; padding: 0;
+  z-index: 102; -webkit-tap-highlight-color: transparent;
 }
-.nav-toggle span {
-  display: block; width: 100%; height: 2px; background: var(--burgundy);
-  position: absolute; left: 0; transition: transform 0.3s ease, opacity 0.3s ease;
+.nav-toggle::before,
+.nav-toggle::after {
+  content: ""; position: absolute; left: 50%; transform: translateX(-50%);
+  width: 20px; height: 2px; background: var(--burgundy); border-radius: 2px;
+  transition: transform 0.32s cubic-bezier(0.22,1,0.36,1), top 0.32s cubic-bezier(0.22,1,0.36,1);
 }
-.nav-toggle span:nth-child(1) { top: 0; }
-.nav-toggle span:nth-child(2) { top: 9px; }
-.nav-toggle span:nth-child(3) { top: 18px; }
-.nav-toggle.open span:nth-child(1) { top: 9px; transform: rotate(45deg); }
-.nav-toggle.open span:nth-child(2) { opacity: 0; }
-.nav-toggle.open span:nth-child(3) { top: 9px; transform: rotate(-45deg); }
+.nav-toggle::before { top: 16px; }
+.nav-toggle::after { top: 26px; }
+.nav-toggle.open::before { top: 21px; transform: translateX(-50%) rotate(45deg); }
+.nav-toggle.open::after { top: 21px; transform: translateX(-50%) rotate(-45deg); }
+
+/* Fullscreen mobile overlay */
+.nav-links-overlay {
+  display: none;
+}
+body.nav-lock { overflow: hidden; }
 
 @media (max-width: 768px) {
   /* Header mobile */
   nav { padding: 18px 24px; }
   .nav-toggle { display: block; }
+  .nav-date { z-index: 102; position: relative; }
+
   .nav-links {
-    display: none; flex-direction: column; gap: 24px;
-    position: absolute; top: 100%; right: 0; left: 0;
-    background: rgba(245,237,224,0.95); backdrop-filter: blur(10px);
-    padding: 30px 24px; text-align: center;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 101;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 32px;
+    background: var(--cream);
+    opacity: 0; pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 0.44s cubic-bezier(0.22,1,0.36,1),
+                transform 0.44s cubic-bezier(0.22,1,0.36,1);
   }
-  .nav-links.open { display: flex; }
-  nav a { font-size: 0.825rem; letter-spacing: 1px; }
+  .nav-links.open {
+    opacity: 1; pointer-events: auto; transform: none;
+  }
+  .nav-links a {
+    font-size: clamp(18px, 5.2vw, 24px); letter-spacing: 1px;
+    opacity: 0; transform: translateY(-8px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
+  }
+  .nav-links.open a { opacity: 1; transform: none; }
+  .nav-links.open a:nth-child(1) { transition-delay: 0.04s; }
+  .nav-links.open a:nth-child(2) { transition-delay: 0.08s; }
+  .nav-links.open a:nth-child(3) { transition-delay: 0.12s; }
+  .nav-links.open a:nth-child(4) { transition-delay: 0.16s; }
+  .nav-links.open a:nth-child(5) { transition-delay: 0.20s; }
 
   /* Hero */
   .hero-names { font-size: 13.8vw; }
@@ -466,7 +492,7 @@ footer {
 
 <nav id="nav">
   <span class="nav-date">29 août 2026</span>
-  <button class="nav-toggle" id="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Menu"></button>
   <div class="nav-links" id="nav-links">
     <a href="#programme">Programme</a>
     <a href="#lieux">Lieux</a>
@@ -651,14 +677,14 @@ const nav = document.getElementById('nav');
 // Hamburger toggle
 const navToggle = document.getElementById('nav-toggle');
 const navLinks = document.getElementById('nav-links');
-navToggle.addEventListener('click', () => {
-  navToggle.classList.toggle('open');
-  navLinks.classList.toggle('open');
-});
-navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  navToggle.classList.remove('open');
-  navLinks.classList.remove('open');
-}));
+function toggleMenu(open) {
+  const isOpen = open !== undefined ? open : !navToggle.classList.contains('open');
+  navToggle.classList.toggle('open', isOpen);
+  navLinks.classList.toggle('open', isOpen);
+  document.body.classList.toggle('nav-lock', isOpen);
+}
+navToggle.addEventListener('click', () => toggleMenu());
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
 const weddingDate = new Date('2026-08-29T16:00:00');
 function updateCountdown() {
   const now = new Date(), diff = weddingDate - now;
