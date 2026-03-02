@@ -303,6 +303,20 @@ nav a:hover::after { width: 100%; }
 }
 .info-link:hover::after { opacity: 1; }
 
+.playlist-choices {
+  display: none; flex-direction: column; align-items: center; gap: 10px;
+  margin-top: 16px;
+}
+.playlist-choices.open { display: flex; }
+.playlist-choice {
+  font-family: 'OpeningHours', sans-serif; font-style: italic;
+  font-size: 17px; color: var(--cream); text-decoration: none;
+  background: var(--burgundy); padding: 10px 28px; border-radius: 6px;
+  transition: opacity 0.3s, transform 0.2s; width: 100%; max-width: 260px;
+  text-align: center;
+}
+.playlist-choice:hover { opacity: 0.85; transform: translateY(-1px); }
+
 .hebergement-section {
   max-width: none; margin: 0; padding: 140px 40px;
   text-align: center;
@@ -597,8 +611,11 @@ body.nav-lock { overflow: hidden; }
       <div class="info-illustration"><img src="images/playlist.png" alt="Playlist"></div>
       <h3 class="info-title">Notre Playlist</h3>
       <p class="info-desc">Ajoutez vos morceaux préférés pour une soirée inoubliable</p>
-      <a href="https://open.spotify.com/playlist/3E3y4jsG2j1bFgEettjk2l?si=LAWHGd5VSMS0Q___2UCFxA&pi=vUH4fBQvTd2Ad&pt=2ffe6201b545f2d128881194412b92c1" target="_blank" class="info-link">ouvrir spotify</a>
-      <a href="/musique/" class="info-link" style="margin-top:8px; display:inline-block;">ajouter manuellement</a>
+      <a href="#" class="info-link" id="playlist-btn">ajouter une musique</a>
+      <div class="playlist-choices" id="playlist-choices">
+        <a href="https://open.spotify.com/playlist/3E3y4jsG2j1bFgEettjk2l?si=LAWHGd5VSMS0Q___2UCFxA&pi=vUH4fBQvTd2Ad&pt=2ffe6201b545f2d128881194412b92c1" target="_blank" class="playlist-choice">ajouter sur spotify</a>
+        <a href="/musique/" class="playlist-choice">ajouter manuellement</a>
+      </div>
     </div>
     <div class="info-block">
       <div class="info-illustration"><img src="images/cadeau.png" alt="Cadeau"></div>
@@ -773,6 +790,14 @@ document.querySelectorAll('nav a').forEach(link => {
     const target = document.querySelector(link.getAttribute('href'));
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+});
+
+// Playlist toggle
+document.getElementById('playlist-btn').addEventListener('click', function(e) {
+  e.preventDefault();
+  var choices = document.getElementById('playlist-choices');
+  choices.classList.toggle('open');
+  this.style.display = choices.classList.contains('open') ? 'none' : '';
 });
 
 </script>
