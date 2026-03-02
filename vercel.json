@@ -1,10 +1,5 @@
 {
-  "builds": [
-    { "src": "api/*.js", "use": "@vercel/node" },
-    { "src": "mariage-site 2/**", "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/(.*)", "dest": "/mariage-site 2/$1" }
-  ]
+  "version": 2,
+  "buildCommand": "",
+  "outputDirectory": "mariage-site 2"
 }
