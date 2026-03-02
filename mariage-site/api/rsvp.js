@@ -67,9 +67,6 @@ module.exports = async function handler(req, res) {
       requestBody: { values: [row] },
     });
 
-    // Update Dashboard
-    await updateDashboard(sheets);
-
     return res.status(200).json({ success: true });
   } catch (err) {
     console.error('RSVP API error:', err);
@@ -77,63 +74,3 @@ module.exports = async function handler(req, res) {
   }
 };
 
-async function updateDashboard(sheets) {
-  try {
-    // Count rows in each tab (minus header)
-    const tabs = ['Cocktail', 'Dîner', 'Brunch'];
-    const counts = {};
-    const presents = {};
-
-    for (const tab of tabs) {
-      const resp = await sheets.spreadsheets.values.get({
-        spreadsheetId: SPREADSHEET_ID,
-        range: `'${tab}'!A:Q`,
-      });
-      const rows = resp.data.values || [];
-      const dataRows = rows.slice(1); // skip header
-      counts[tab] = dataRows.length;
-
-      // Count presents: check the relevant column for "Oui"
-      // Cocktail=col F(5), Dîner=col G(6), Brunch=col H(7)
-      const colIdx = tab === 'Cocktail' ? 5 : tab === 'Dîner' ? 6 : 7;
-      let presentCount = 0;
-      for (const r of dataRows) {
-        // Count P1
-        if (r[colIdx] === 'Oui') presentCount++;
-        // Count P2 if not alone
-        if (r[2] === 'Non' && r[colIdx + 6] === 'Oui') presentCount++;
-      }
-      presents[tab] = presentCount;
-    }
-
-    // Total persons
-    const allResp = await sheets.spreadsheets.values.get({
-      spreadsheetId: SPREADSHEET_ID,
-      range: "'Toutes les réponses'!A:C",
-    });
-    const allRows = (allResp.data.values || []).slice(1);
-    let totalPersons = 0;
-    for (const r of allRows) {
-      totalPersons += 1; // P1
-      if (r[2] === 'Non') totalPersons += 1; // P2 if not alone
-    }
-
-    await sheets.spreadsheets.values.update({
-      spreadsheetId: SPREADSHEET_ID,
-      range: "'Dashboard'!A3",
-      valueInputOption: 'RAW',
-      requestBody: {
-        values: [
-          ['', 'Total réponses', 'Présents'],
-          ['Cocktail', String(counts['Cocktail'] || 0), String(presents['Cocktail'] || 0)],
-          ['Dîner', String(counts['Dîner'] || 0), String(presents['Dîner'] || 0)],
-          ['Brunch', String(counts['Brunch'] || 0), String(presents['Brunch'] || 0)],
-          ['', '', ''],
-          ['Total personnes (P1+P2)', String(totalPersons), ''],
-        ],
-      },
-    });
-  } catch (e) {
-    console.error('Dashboard update error:', e.message);
-  }
-}
