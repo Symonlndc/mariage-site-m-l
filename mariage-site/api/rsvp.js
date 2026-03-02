@@ -28,17 +28,20 @@ module.exports = async function handler(req, res) {
     const targetTab = validTabs.includes(typeTab) ? typeTab : 'Cocktail';
 
     const persons = data.persons || [];
+    const p1Name = persons.length > 0 ? `${persons[0].prenom || ''} ${persons[0].nom || ''}`.trim() : '';
+
     const rows = persons.map((p, i) => [
       now,
       data.type || '',
       p.nom || '',
       p.prenom || '',
+      i === 0 ? '' : p1Name,
       p.cocktail || '',
       p.diner || '',
       p.brunch || '',
       p.intolerances || '',
-      i === 0 ? (data.messe_participation || 'Non répondu') : '',
-      i === 0 ? (data.messe_detail || '') : '',
+      data.messe_participation || 'Non répondu',
+      data.messe_detail || '',
     ]);
 
     if (rows.length === 0) {
@@ -48,7 +51,7 @@ module.exports = async function handler(req, res) {
     // Append to specific tab
     await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
-      range: `'${targetTab}'!A:J`,
+      range: `'${targetTab}'!A:K`,
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       requestBody: { values: rows },
@@ -57,7 +60,7 @@ module.exports = async function handler(req, res) {
     // Append to "Toutes les réponses"
     await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
-      range: "'Toutes les réponses'!A:J",
+      range: "'Toutes les réponses'!A:K",
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       requestBody: { values: rows },
