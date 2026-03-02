@@ -1,12 +1,10 @@
 {
-  "outputDirectory": "mariage-site 2",
-  "functions": {
-    "api/*.js": {
-      "memory": 256,
-      "maxDuration": 10
-    }
-  },
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" }
+  "builds": [
+    { "src": "api/*.js", "use": "@vercel/node" },
+    { "src": "mariage-site 2/**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "/mariage-site 2/$1" }
   ]
 }
