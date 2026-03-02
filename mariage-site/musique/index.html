@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ajouter une musique — Margaux & Léopold</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💕</text></svg>">
+<style>
+@font-face {
+  font-family: 'OpeningHours';
+  src: url('../fonts/OpeningHoursSans-Regular.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'RecifeDisplay';
+  src: url('../fonts/RecifeDisplay-LightItalic.woff2') format('woff2'),
+       url('../fonts/RecifeDisplay-LightItalic.woff') format('woff'),
+       url('../fonts/RecifeDisplay-LightItalic.ttf') format('truetype');
+  font-weight: 100 900; font-style: italic; font-display: swap;
+}
+
+:root {
+  --cream: #f5ede0;
+  --burgundy: #67102a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'OpeningHours', sans-serif;
+  color: var(--burgundy);
+  background: linear-gradient(170deg, #F5EDE0 0%, #FAF5EE 40%, #F2E8DA 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 40px 20px 60px;
+}
+
+.form-container { width: 100%; max-width: 520px; }
+
+.form-header {
+  text-align: center; margin-bottom: 50px;
+  opacity: 0; transform: translateY(20px);
+  animation: fadeUp 0.8s ease forwards;
+}
+.form-header h1 {
+  font-family: 'RecifeDisplay', serif; font-style: italic;
+  font-size: 2.4rem; font-weight: 300; line-height: 1.2;
+  margin-bottom: 10px;
+}
+.form-header .subtitle {
+  font-size: 14px; letter-spacing: 1px; text-transform: uppercase;
+  opacity: 0.6; margin-bottom: 8px;
+}
+.form-header .divider {
+  width: 50px; height: 1px; background: var(--burgundy); opacity: 0.3;
+  margin: 20px auto 0;
+}
+
+.form-section {
+  margin-bottom: 36px;
+  opacity: 0; transform: translateY(20px);
+  animation: fadeUp 0.8s ease forwards;
+}
+.form-section:nth-child(1) { animation-delay: 0.1s; }
+.form-section:nth-child(2) { animation-delay: 0.2s; }
+
+.section-label {
+  font-family: 'RecifeDisplay', serif; font-style: italic;
+  font-size: 1.4rem; font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.field { margin-bottom: 18px; }
+.field label {
+  display: block; font-size: 13px; letter-spacing: 0.5px;
+  text-transform: uppercase; opacity: 0.6; margin-bottom: 6px;
+}
+.field input {
+  width: 100%; padding: 12px 16px;
+  font-family: 'OpeningHours', sans-serif; font-size: 16px;
+  color: var(--burgundy);
+  background: rgba(255,255,255,0.5);
+  border: 1px solid rgba(103,16,42,0.15); border-radius: 6px;
+  outline: none; transition: border-color 0.3s;
+}
+.field input:focus { border-color: rgba(103,16,42,0.4); }
+.field input::placeholder { color: var(--burgundy); opacity: 0.35; }
+
+.submit-btn {
+  display: block; width: 100%; padding: 16px;
+  font-family: 'OpeningHours', sans-serif; font-size: 15px;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--cream); background: var(--burgundy);
+  border: none; border-radius: 6px; cursor: pointer;
+  transition: opacity 0.3s, transform 0.2s;
+  margin-top: 10px;
+}
+.submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+.submit-btn:active { transform: translateY(0); }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.confirmation {
+  display: none; text-align: center; padding: 60px 20px;
+  opacity: 0; transform: translateY(20px);
+}
+.confirmation.show { display: block; animation: fadeUp 0.6s ease forwards; }
+.confirmation h2 {
+  font-family: 'RecifeDisplay', serif; font-style: italic;
+  font-size: 2rem; font-weight: 300; margin-bottom: 16px;
+}
+.confirmation p { font-size: 16px; opacity: 0.7; line-height: 1.6; }
+.confirmation .heart {
+  font-size: 24px; margin-top: 20px;
+  display: block; animation: pulse 2s ease infinite;
+}
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+@media (max-width: 600px) {
+  body { padding: 30px 16px 50px; }
+  .form-header h1 { font-size: 2rem; }
+  .section-label { font-size: 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="form-container">
+  <div class="form-header">
+    <h1>Margaux & Léopold</h1>
+    <p class="subtitle">Ajouter une musique</p>
+    <div class="divider"></div>
+  </div>
+
+  <form id="music-form" autocomplete="off">
+    <div class="form-section">
+      <p class="section-label">Votre suggestion musicale</p>
+      <div class="field"><label>Titre du morceau *</label><input type="text" id="titre" required placeholder="Ex : La Vie en Rose"></div>
+      <div class="field"><label>Artiste *</label><input type="text" id="artiste" required placeholder="Ex : Edith Piaf"></div>
+      <div class="field"><label>Votre prénom</label><input type="text" id="prenom" placeholder="Facultatif"></div>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submit-btn">Ajouter cette musique</button>
+  </form>
+
+  <div class="confirmation" id="confirmation">
+    <h2>Merci !</h2>
+    <p>Votre suggestion a bien été enregistrée.<br>Vous allez être redirigé(e)...</p>
+    <span class="heart">&#9829;</span>
+  </div>
+</div>
+
+<script>
+(function() {
+  const form = document.getElementById('music-form');
+  const confirmation = document.getElementById('confirmation');
+  const submitBtn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Envoi en cours...';
+
+    const payload = {
+      titre: document.getElementById('titre').value.trim(),
+      artiste: document.getElementById('artiste').value.trim(),
+      prenom: document.getElementById('prenom').value.trim()
+    };
+
+    try {
+      const resp = await fetch('/api/music', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await resp.json();
+      if (!data.success) throw new Error(data.error || 'Erreur');
+
+      form.style.display = 'none';
+      confirmation.classList.add('show');
+      setTimeout(() => { window.location.href = 'https://www.margauxetleopold.fr/'; }, 3000);
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Ajouter cette musique';
+      alert('Une erreur est survenue. Veuillez réessayer.');
+      console.error(err);
+    }
+  });
+})();
+</script>
+</body>
+</html>
