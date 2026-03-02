@@ -246,6 +246,7 @@ body {
       <p class="section-label">Participation à la messe</p>
       <p style="font-size:15px; opacity:0.6; margin-bottom:4px;">Souhaitez-vous participer au déroulement de la messe ?</p>
       <div class="checkbox-group">
+        <label class="checkbox-item"><input type="checkbox" name="messe" value="Non" id="messe-non"> Non</label>
         <label class="checkbox-item"><input type="checkbox" name="messe" value="Lecture"> Lecture</label>
         <label class="checkbox-item"><input type="checkbox" name="messe" value="Chant"> Chant</label>
         <label class="checkbox-item"><input type="checkbox" name="messe" value="Instrument"> Je joue d'un instrument</label>
@@ -294,6 +295,16 @@ body {
     });
   });
 
+  // Messe: "Non" is exclusive with other options
+  const messeNon = document.getElementById('messe-non');
+  const messeOthers = document.querySelectorAll('input[name="messe"]:not(#messe-non)');
+  messeNon.addEventListener('change', () => {
+    if (messeNon.checked) messeOthers.forEach(c => c.checked = false);
+  });
+  messeOthers.forEach(c => c.addEventListener('change', () => {
+    if (c.checked) messeNon.checked = false;
+  }));
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     submitBtn.disabled = true;
@@ -316,8 +327,8 @@ body {
       p2_diner: state.alone ? '' : state.p2_diner,
       p2_brunch: '',
       p2_intolerances: state.alone ? '' : document.getElementById('p2_intolerances').value.trim(),
-      messe_participation: messeChecks.length > 0 ? 'Oui' : 'Non répondu',
-      messe_detail: messeChecks.join(', ')
+      messe_participation: messeChecks.includes('Non') ? 'Non' : messeChecks.length > 0 ? 'Oui' : 'Non répondu',
+      messe_detail: messeChecks.filter(v => v !== 'Non').join(', ')
     };
 
     try {
