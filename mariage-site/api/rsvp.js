@@ -11,7 +11,6 @@ function getAuth() {
 }
 
 module.exports = async function handler(req, res) {
-  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -24,47 +23,44 @@ module.exports = async function handler(req, res) {
     const sheets = google.sheets({ version: 'v4', auth });
     const now = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
 
-    const row = [
-      now,
-      data.type || '',
-      data.alone ? 'Oui' : 'Non',
-      data.p1_nom || '',
-      data.p1_prenom || '',
-      data.p1_cocktail || '',
-      data.p1_diner || '',
-      data.p1_brunch || '',
-      data.p1_intolerances || '',
-      data.p2_nom || '',
-      data.p2_prenom || '',
-      data.p2_cocktail || '',
-      data.p2_diner || '',
-      data.p2_brunch || '',
-      data.p2_intolerances || '',
-      data.messe_participation || 'Non répondu',
-      data.messe_detail || '',
-    ];
-
-    // Determine which tab based on type
     const typeTab = data.type || 'Cocktail';
     const validTabs = ['Cocktail', 'Dîner', 'Brunch'];
     const targetTab = validTabs.includes(typeTab) ? typeTab : 'Cocktail';
 
+    const persons = data.persons || [];
+    const rows = persons.map((p, i) => [
+      now,
+      data.type || '',
+      p.nom || '',
+      p.prenom || '',
+      p.cocktail || '',
+      p.diner || '',
+      p.brunch || '',
+      p.intolerances || '',
+      i === 0 ? (data.messe_participation || 'Non répondu') : '',
+      i === 0 ? (data.messe_detail || '') : '',
+    ]);
+
+    if (rows.length === 0) {
+      return res.status(400).json({ error: 'Aucune personne renseignée' });
+    }
+
     // Append to specific tab
     await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
-      range: `'${targetTab}'!A:Q`,
+      range: `'${targetTab}'!A:J`,
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
-      requestBody: { values: [row] },
+      requestBody: { values: rows },
     });
 
     // Append to "Toutes les réponses"
     await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
-      range: "'Toutes les réponses'!A:Q",
+      range: "'Toutes les réponses'!A:J",
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
-      requestBody: { values: [row] },
+      requestBody: { values: rows },
     });
 
     return res.status(200).json({ success: true });
@@ -73,4 +69,3 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: 'Erreur serveur', details: err.message });
   }
 };
-

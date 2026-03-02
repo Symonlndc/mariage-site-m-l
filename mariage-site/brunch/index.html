@@ -18,80 +18,54 @@
        url('../fonts/RecifeDisplay-LightItalic.ttf') format('truetype');
   font-weight: 100 900; font-style: italic; font-display: swap;
 }
-
-:root {
-  --cream: #f5ede0;
-  --burgundy: #67102a;
-  --burgundy-light: #8a2040;
-  --gold: #b8956a;
-  --charcoal: #2C2C2C;
-}
-
+:root { --cream: #f5ede0; --burgundy: #67102a; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-
 body {
-  font-family: 'OpeningHours', sans-serif;
-  color: var(--burgundy);
+  font-family: 'OpeningHours', sans-serif; color: var(--burgundy);
   background: linear-gradient(170deg, #F5EDE0 0%, #FAF5EE 40%, #F2E8DA 100%);
-  background-attachment: fixed;
-  min-height: 100vh;
+  background-attachment: fixed; min-height: 100vh;
   display: flex; flex-direction: column; align-items: center;
   padding: 40px 20px 60px;
 }
-
 .form-container { width: 100%; max-width: 520px; }
-
 .form-header {
-  text-align: center; margin-bottom: 50px;
-  opacity: 0; transform: translateY(20px);
-  animation: fadeUp 0.8s ease forwards;
+  text-align: center; margin-bottom: 40px;
+  opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s ease forwards;
 }
 .form-header h1 {
   font-family: 'RecifeDisplay', serif; font-style: italic;
-  font-size: 2.4rem; font-weight: 300; line-height: 1.2;
-  margin-bottom: 10px;
+  font-size: 2.4rem; font-weight: 300; line-height: 1.2; margin-bottom: 10px;
 }
 .form-header .subtitle {
   font-size: 14px; letter-spacing: 1px; text-transform: uppercase;
   opacity: 0.6; margin-bottom: 8px;
 }
 .form-header .divider {
-  width: 50px; height: 1px; background: var(--burgundy); opacity: 0.3;
-  margin: 20px auto 0;
+  width: 50px; height: 1px; background: var(--burgundy); opacity: 0.3; margin: 20px auto 0;
 }
-
-.form-section {
-  margin-bottom: 36px;
-  opacity: 0; transform: translateY(20px);
-  animation: fadeUp 0.8s ease forwards;
+.form-header .notice {
+  font-style: italic; font-size: 13px; opacity: 0.5; margin-top: 16px; line-height: 1.5;
 }
-.form-section:nth-child(2) { animation-delay: 0.1s; }
-.form-section:nth-child(3) { animation-delay: 0.2s; }
-.form-section:nth-child(4) { animation-delay: 0.3s; }
-.form-section:nth-child(5) { animation-delay: 0.4s; }
-
+.family-notice {
+  font-style: italic; font-size: 14px; opacity: 0.55;
+  text-align: center; margin-bottom: 30px; line-height: 1.5;
+}
 .section-label {
   font-family: 'RecifeDisplay', serif; font-style: italic;
-  font-size: 1.4rem; font-weight: 300;
-  margin-bottom: 20px;
+  font-size: 1.4rem; font-weight: 300; margin-bottom: 20px;
 }
-
-.toggle-group {
-  display: flex; gap: 0; border: 1px solid rgba(103,16,42,0.2); border-radius: 6px;
-  overflow: hidden;
+.person-card { margin-bottom: 36px; }
+.person-header {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
 }
-.toggle-option {
-  flex: 1; padding: 12px 20px; text-align: center;
-  font-family: 'OpeningHours', sans-serif; font-size: 15px;
-  cursor: pointer; transition: all 0.3s ease;
-  background: transparent; color: var(--burgundy); opacity: 0.6;
+.person-header .section-label { margin-bottom: 0; }
+.remove-person {
+  background: none; border: 1px solid rgba(103,16,42,0.2); border-radius: 4px;
+  color: var(--burgundy); opacity: 0.5; font-size: 13px; padding: 4px 12px;
+  cursor: pointer; font-family: 'OpeningHours', sans-serif; transition: opacity 0.3s;
 }
-.toggle-option.active {
-  background: var(--burgundy); color: var(--cream); opacity: 1;
-}
-.toggle-option:hover:not(.active) { opacity: 0.8; background: rgba(103,16,42,0.05); }
-
+.remove-person:hover { opacity: 0.8; }
 .field { margin-bottom: 18px; }
 .field label {
   display: block; font-size: 13px; letter-spacing: 0.5px;
@@ -99,8 +73,7 @@ body {
 }
 .field input, .field textarea {
   width: 100%; padding: 12px 16px;
-  font-family: 'OpeningHours', sans-serif; font-size: 16px;
-  color: var(--burgundy);
+  font-family: 'OpeningHours', sans-serif; font-size: 16px; color: var(--burgundy);
   background: rgba(255,255,255,0.5);
   border: 1px solid rgba(103,16,42,0.15); border-radius: 6px;
   outline: none; transition: border-color 0.3s;
@@ -108,7 +81,6 @@ body {
 .field input:focus, .field textarea:focus { border-color: rgba(103,16,42,0.4); }
 .field textarea { resize: vertical; min-height: 70px; }
 .field input::placeholder, .field textarea::placeholder { color: var(--burgundy); opacity: 0.35; }
-
 .presence-row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px 0; border-bottom: 1px solid rgba(103,16,42,0.08);
@@ -116,30 +88,35 @@ body {
 .presence-row:last-child { border-bottom: none; }
 .presence-label { font-size: 16px; }
 .presence-toggle {
-  display: flex; gap: 0; border: 1px solid rgba(103,16,42,0.2); border-radius: 4px;
-  overflow: hidden;
+  display: flex; gap: 0; border: 1px solid rgba(103,16,42,0.2); border-radius: 4px; overflow: hidden;
 }
-.presence-toggle .toggle-option { padding: 8px 18px; font-size: 14px; }
-
-.person2-wrap {
-  max-height: 0; overflow: hidden; opacity: 0;
-  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+.toggle-option {
+  padding: 8px 18px; font-size: 14px; text-align: center;
+  font-family: 'OpeningHours', sans-serif;
+  cursor: pointer; transition: all 0.3s ease;
+  background: transparent; color: var(--burgundy); opacity: 0.6;
 }
-.person2-wrap.open { max-height: 800px; opacity: 1; }
-
+.toggle-option.active { background: var(--burgundy); color: var(--cream); opacity: 1; }
+.toggle-option:hover:not(.active) { opacity: 0.8; background: rgba(103,16,42,0.05); }
+.add-person-btn {
+  display: block; width: 100%; padding: 14px;
+  font-family: 'OpeningHours', sans-serif; font-size: 15px;
+  color: var(--burgundy); background: transparent;
+  border: 1px dashed rgba(103,16,42,0.25); border-radius: 6px;
+  cursor: pointer; transition: all 0.3s; margin-bottom: 36px; text-align: center;
+}
+.add-person-btn:hover { background: rgba(103,16,42,0.04); border-color: rgba(103,16,42,0.4); }
 .submit-btn {
   display: block; width: 100%; padding: 16px;
   font-family: 'OpeningHours', sans-serif; font-size: 15px;
   letter-spacing: 1px; text-transform: uppercase;
   color: var(--cream); background: var(--burgundy);
   border: none; border-radius: 6px; cursor: pointer;
-  transition: opacity 0.3s, transform 0.2s;
-  margin-top: 10px;
+  transition: opacity 0.3s, transform 0.2s; margin-top: 10px;
 }
 .submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
 .submit-btn:active { transform: translateY(0); }
 .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
 .confirmation {
   display: none; text-align: center; padding: 60px 20px;
   opacity: 0; transform: translateY(20px);
@@ -150,14 +127,9 @@ body {
   font-size: 2rem; font-weight: 300; margin-bottom: 16px;
 }
 .confirmation p { font-size: 16px; opacity: 0.7; line-height: 1.6; }
-.confirmation .heart {
-  font-size: 24px; margin-top: 20px;
-  display: block; animation: pulse 2s ease infinite;
-}
-
+.confirmation .heart { font-size: 24px; margin-top: 20px; display: block; animation: pulse 2s ease infinite; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-
 @media (max-width: 600px) {
   body { padding: 30px 16px 50px; }
   .form-header h1 { font-size: 2rem; }
@@ -166,159 +138,98 @@ body {
 </style>
 </head>
 <body>
-
 <div class="form-container">
   <div class="form-header">
     <h1>Margaux & Léopold</h1>
-    <p class="subtitle">Cocktail, Dîner & Brunch — 29 août 2026</p>
+    <p class="subtitle">Brunch — 30 août 2026</p>
     <div class="divider"></div>
+    <p class="notice">Nous vous informons que les enfants en bas âge ne sont pas conviés à cette journée.</p>
   </div>
-
+  <p class="family-notice">Si vous venez en famille, merci d'indiquer les personnes qui viennent avec vous.</p>
   <form id="rsvp-form" autocomplete="off">
-
-    <div class="form-section">
-      <p class="section-label">Je viens seul(e) ?</p>
-      <div class="toggle-group" data-field="alone">
-        <div class="toggle-option active" data-value="true">Oui</div>
-        <div class="toggle-option" data-value="false">Non</div>
-      </div>
-    </div>
-
-    <div class="form-section">
-      <p class="section-label">Vos informations</p>
-      <div class="field"><label>Nom *</label><input type="text" id="p1_nom" required placeholder="Nom"></div>
-      <div class="field"><label>Prénom *</label><input type="text" id="p1_prenom" required placeholder="Prénom"></div>
-      <div class="presence-row">
-        <span class="presence-label">Présent(e) au cocktail ?</span>
-        <div class="presence-toggle" data-field="p1_cocktail">
-          <div class="toggle-option active" data-value="Oui">Oui</div>
-          <div class="toggle-option" data-value="Non">Non</div>
-        </div>
-      </div>
-      <div class="presence-row">
-        <span class="presence-label">Présent(e) au dîner ?</span>
-        <div class="presence-toggle" data-field="p1_diner">
-          <div class="toggle-option active" data-value="Oui">Oui</div>
-          <div class="toggle-option" data-value="Non">Non</div>
-        </div>
-      </div>
-      <div class="presence-row">
-        <span class="presence-label">Présent(e) au brunch ?</span>
-        <div class="presence-toggle" data-field="p1_brunch">
-          <div class="toggle-option active" data-value="Oui">Oui</div>
-          <div class="toggle-option" data-value="Non">Non</div>
-        </div>
-      </div>
-      <div class="field" style="margin-top:16px"><label>Intolérances alimentaires</label><textarea id="p1_intolerances" placeholder="Allergies, régime particulier..."></textarea></div>
-    </div>
-
-    <div class="person2-wrap" id="person2-wrap">
-      <div class="form-section">
-        <p class="section-label">Votre accompagnant(e)</p>
-        <div class="field"><label>Nom *</label><input type="text" id="p2_nom" placeholder="Nom"></div>
-        <div class="field"><label>Prénom *</label><input type="text" id="p2_prenom" placeholder="Prénom"></div>
-        <div class="presence-row">
-          <span class="presence-label">Présent(e) au cocktail ?</span>
-          <div class="presence-toggle" data-field="p2_cocktail">
-            <div class="toggle-option active" data-value="Oui">Oui</div>
-            <div class="toggle-option" data-value="Non">Non</div>
-          </div>
-        </div>
-        <div class="presence-row">
-          <span class="presence-label">Présent(e) au dîner ?</span>
-          <div class="presence-toggle" data-field="p2_diner">
-            <div class="toggle-option active" data-value="Oui">Oui</div>
-            <div class="toggle-option" data-value="Non">Non</div>
-          </div>
-        </div>
+    <div id="persons-container">
+      <div class="person-card" data-index="0">
+        <p class="section-label">Vos informations</p>
+        <div class="field"><label>Nom *</label><input type="text" class="p-nom" required placeholder="Nom"></div>
+        <div class="field"><label>Prénom *</label><input type="text" class="p-prenom" required placeholder="Prénom"></div>
         <div class="presence-row">
           <span class="presence-label">Présent(e) au brunch ?</span>
-          <div class="presence-toggle" data-field="p2_brunch">
+          <div class="presence-toggle" data-field="brunch">
             <div class="toggle-option active" data-value="Oui">Oui</div>
             <div class="toggle-option" data-value="Non">Non</div>
           </div>
         </div>
-        <div class="field" style="margin-top:16px"><label>Intolérances alimentaires</label><textarea id="p2_intolerances" placeholder="Allergies, régime particulier..."></textarea></div>
+        <div class="field" style="margin-top:16px"><label>Intolérances alimentaires</label><textarea class="p-intolerances" placeholder="Allergies, régime particulier..."></textarea></div>
       </div>
     </div>
-
+    <button type="button" class="add-person-btn" id="add-person-btn">+ Ajouter une personne</button>
     <button type="submit" class="submit-btn" id="submit-btn">Confirmer ma réponse</button>
   </form>
-
   <div class="confirmation" id="confirmation">
     <h2>Merci !</h2>
     <p>Votre réponse a bien été enregistrée.<br>Vous allez être redirigé(e)…</p>
     <span class="heart">&#9829;</span>
   </div>
 </div>
-
 <script>
 (function() {
-  const form = document.getElementById('rsvp-form');
-  const confirmation = document.getElementById('confirmation');
-  const person2Wrap = document.getElementById('person2-wrap');
-  const submitBtn = document.getElementById('submit-btn');
+  var container = document.getElementById('persons-container');
+  var form = document.getElementById('rsvp-form');
+  var confirmation = document.getElementById('confirmation');
+  var submitBtn = document.getElementById('submit-btn');
 
-  const state = {
-    alone: true,
-    p1_cocktail: 'Oui', p1_diner: 'Oui', p1_brunch: 'Oui',
-    p2_cocktail: 'Oui', p2_diner: 'Oui', p2_brunch: 'Oui'
-  };
-
-  document.querySelectorAll('.toggle-group, .presence-toggle').forEach(group => {
-    const field = group.dataset.field;
-    group.querySelectorAll('.toggle-option').forEach(opt => {
-      opt.addEventListener('click', () => {
-        group.querySelectorAll('.toggle-option').forEach(o => o.classList.remove('active'));
-        opt.classList.add('active');
-        const val = opt.dataset.value;
-        state[field] = val === 'true' ? true : val === 'false' ? false : val;
-
-        if (field === 'alone') {
-          person2Wrap.classList.toggle('open', !state.alone);
-          document.getElementById('p2_nom').required = !state.alone;
-          document.getElementById('p2_prenom').required = !state.alone;
-        }
+  function initToggles(root) {
+    root.querySelectorAll('.presence-toggle').forEach(function(group) {
+      group.querySelectorAll('.toggle-option').forEach(function(opt) {
+        opt.addEventListener('click', function() {
+          group.querySelectorAll('.toggle-option').forEach(function(o) { o.classList.remove('active'); });
+          opt.classList.add('active');
+        });
       });
     });
+  }
+  initToggles(document);
+
+  document.getElementById('add-person-btn').addEventListener('click', function() {
+    var card = document.createElement('div');
+    card.className = 'person-card';
+    card.innerHTML = '<div class="person-header"><p class="section-label">Accompagnant(e)</p><button type="button" class="remove-person">Retirer</button></div>'
+      + '<div class="field"><label>Nom *</label><input type="text" class="p-nom" required placeholder="Nom"></div>'
+      + '<div class="field"><label>Prénom *</label><input type="text" class="p-prenom" required placeholder="Prénom"></div>'
+      + '<div class="presence-row"><span class="presence-label">Présent(e) au brunch ?</span><div class="presence-toggle" data-field="brunch"><div class="toggle-option active" data-value="Oui">Oui</div><div class="toggle-option" data-value="Non">Non</div></div></div>'
+      + '<div class="field" style="margin-top:16px"><label>Intolérances alimentaires</label><textarea class="p-intolerances" placeholder="Allergies, régime particulier..."></textarea></div>';
+    container.appendChild(card);
+    initToggles(card);
+    card.querySelector('.remove-person').addEventListener('click', function() { card.remove(); });
   });
 
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
     submitBtn.disabled = true;
     submitBtn.textContent = 'Envoi en cours…';
-
-    const payload = {
-      type: 'Brunch',
-      alone: state.alone,
-      p1_nom: document.getElementById('p1_nom').value.trim(),
-      p1_prenom: document.getElementById('p1_prenom').value.trim(),
-      p1_cocktail: state.p1_cocktail,
-      p1_diner: state.p1_diner,
-      p1_brunch: state.p1_brunch,
-      p1_intolerances: document.getElementById('p1_intolerances').value.trim(),
-      p2_nom: state.alone ? '' : document.getElementById('p2_nom').value.trim(),
-      p2_prenom: state.alone ? '' : document.getElementById('p2_prenom').value.trim(),
-      p2_cocktail: state.alone ? '' : state.p2_cocktail,
-      p2_diner: state.alone ? '' : state.p2_diner,
-      p2_brunch: state.alone ? '' : state.p2_brunch,
-      p2_intolerances: state.alone ? '' : document.getElementById('p2_intolerances').value.trim(),
-      messe_participation: 'Non répondu',
-      messe_detail: ''
-    };
-
-    try {
-      const resp = await fetch('/api/rsvp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+    var cards = container.querySelectorAll('.person-card');
+    var persons = [];
+    cards.forEach(function(card) {
+      var toggle = card.querySelector('.presence-toggle[data-field="brunch"] .toggle-option.active');
+      persons.push({
+        nom: card.querySelector('.p-nom').value.trim(),
+        prenom: card.querySelector('.p-prenom').value.trim(),
+        cocktail: '', diner: '',
+        brunch: toggle ? toggle.dataset.value : 'Oui',
+        intolerances: card.querySelector('.p-intolerances').value.trim()
       });
-      const data = await resp.json();
+    });
+    var payload = {
+      type: 'Brunch', persons: persons,
+      messe_participation: 'Non répondu', messe_detail: ''
+    };
+    try {
+      var resp = await fetch('/api/rsvp', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      var data = await resp.json();
       if (!data.success) throw new Error(data.error || 'Erreur');
-
       form.style.display = 'none';
       confirmation.classList.add('show');
-      setTimeout(() => { window.location.href = 'https://www.margauxetleopold.fr/'; }, 3000);
+      setTimeout(function() { window.location.href = 'https://www.margauxetleopold.fr/'; }, 3000);
     } catch (err) {
       submitBtn.disabled = false;
       submitBtn.textContent = 'Confirmer ma réponse';
