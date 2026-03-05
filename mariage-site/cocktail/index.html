@@ -148,7 +148,6 @@ body {
     <h1>Margaux & Léopold</h1>
     <p class="subtitle">Cocktail — 29 août 2026</p>
     <div class="divider"></div>
-    <p class="notice">Nous vous informons que les enfants en bas âge ne sont pas conviés à cette journée.</p>
   </div>
   <p class="family-notice">Si vous venez en famille, merci d'indiquer les personnes qui viennent avec vous.</p>
   <form id="rsvp-form" autocomplete="off">
@@ -164,7 +163,6 @@ body {
             <div class="toggle-option" data-value="Non">Non</div>
           </div>
         </div>
-        <div class="field" style="margin-top:16px"><label>Intolérances alimentaires</label><textarea class="p-intolerances" placeholder="Allergies, régime particulier..."></textarea></div>
       </div>
     </div>
     <button type="button" class="add-person-btn" id="add-person-btn">+ Ajouter une personne</button>
@@ -213,7 +211,6 @@ body {
       + '<div class="field"><label>Nom *</label><input type="text" class="p-nom" required placeholder="Nom"></div>'
       + '<div class="field"><label>Prénom *</label><input type="text" class="p-prenom" required placeholder="Prénom"></div>'
       + '<div class="presence-row"><span class="presence-label">Présent(e) au cocktail ?</span><div class="presence-toggle" data-field="cocktail"><div class="toggle-option active" data-value="Oui">Oui</div><div class="toggle-option" data-value="Non">Non</div></div></div>'
-      + '<div class="field" style="margin-top:16px"><label>Intolérances alimentaires</label><textarea class="p-intolerances" placeholder="Allergies, régime particulier..."></textarea></div>';
     container.appendChild(card);
     initToggles(card);
     card.querySelector('.remove-person').addEventListener('click', function() { card.remove(); });
@@ -237,8 +234,7 @@ body {
         nom: card.querySelector('.p-nom').value.trim(),
         prenom: card.querySelector('.p-prenom').value.trim(),
         cocktail: toggle ? toggle.dataset.value : 'Oui',
-        diner: '', brunch: '',
-        intolerances: card.querySelector('.p-intolerances').value.trim()
+        diner: '', brunch: ''
       });
     });
     var payload = {

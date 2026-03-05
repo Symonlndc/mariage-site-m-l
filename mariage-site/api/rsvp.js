@@ -39,7 +39,6 @@ module.exports = async function handler(req, res) {
       p.cocktail || '',
       p.diner || '',
       p.brunch || '',
-      p.intolerances || '',
       data.messe_participation || 'Non répondu',
       data.messe_detail || '',
     ]);
@@ -51,7 +50,7 @@ module.exports = async function handler(req, res) {
     // Append to specific tab
     await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
-      range: `'${targetTab}'!A:K`,
+      range: `'${targetTab}'!A:J`,
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       requestBody: { values: rows },
